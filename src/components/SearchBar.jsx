@@ -7,11 +7,13 @@ const SearchBar = () => {
   const { query, setQuery, setMovies, setLoading, setError } = useContext(SearchContext);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     if (!query) {
       setMovies([]);
       navigate("/");
       return;
+
     }
 
     const timeout = setTimeout(async () => {
@@ -39,13 +41,14 @@ const SearchBar = () => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button
-        onClick={() => navigate("/")}
-        className="back-button"
-        
-      >
-        Retour
-      </button>
+      {query && (<button
+        onClick={() => {
+          navigate("/"),
+          setQuery("")
+        }}
+        className="back-button">
+        X
+      </button>)}
     </div>
   );
 };
