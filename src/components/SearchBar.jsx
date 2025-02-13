@@ -1,19 +1,17 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchMovies } from '../api/api';
-import { SearchContext } from '../context/SearchContext';
+import { useSearchStore } from '../store';
 
 const SearchBar = () => {
-  const { query, setQuery, setMovies, setLoading, setError } = useContext(SearchContext);
+  const { query, setQuery, setMovies, setLoading, setError } = useSearchStore();
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (!query) {
       setMovies([]);
       navigate("/");
       return;
-
     }
 
     const timeout = setTimeout(async () => {
@@ -31,7 +29,7 @@ const SearchBar = () => {
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [query]);
+  }, [query, navigate, setMovies, setLoading, setError]);
 
   return (
     <div>

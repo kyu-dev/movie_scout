@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { getMoviesVideos } from "../api/api";
+import { useSearchStore } from "../store";
 
 const MovieDetails = () => {
-  const { movieId } = useParams();
-  const [trailerUrl, setTrailerUrl] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { movieId, error, loading, trailerUrl, setTrailerUrl, setLoading } = useSearchStore();
 
   // Ce useEffect est déclenché à chaque changement de movieId
   // Il récupère l'URL de la bande-annonce via l'API video de tmdb
@@ -16,7 +13,7 @@ const MovieDetails = () => {
         const url = await getMoviesVideos(movieId);
         setTrailerUrl(url);
       } catch (err) {
-        setError('Erreur lors de la récupération de la vidéo');
+        setError("Erreur lors de la récupération de la vidéo");
       } finally {
         setLoading(false); // On arrête le chargement dans tous les cas (succès ou erreur)
       }
@@ -37,7 +34,6 @@ const MovieDetails = () => {
           height="315"
           src={trailerUrl.replace("watch?v=", "embed/")}
           title="YouTube video player"
-          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen

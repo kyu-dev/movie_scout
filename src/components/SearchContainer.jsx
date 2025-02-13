@@ -1,17 +1,13 @@
-import React, { useContext } from 'react';
-import SearchResults from './SearchResults';
-import { SearchContext } from '../context/SearchContext';
+import React from "react";
+import SearchResults from "./SearchResults";
+import { useSearchStore } from "../store";
 
 const SearchContainer = () => {
-  const { movies, loading, error } = useContext(SearchContext);
+  const { movies, loading, error } = useSearchStore();
 
   return (
     <>
-      <SearchResults
-        loading={loading}
-        error={error}
-        movies={movies}
-      />
+      <SearchResults loading={loading} error={error} movies={movies} />
     </>
   );
 };
