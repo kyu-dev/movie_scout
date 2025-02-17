@@ -1,15 +1,18 @@
 import React from "react";
 import MovieCard from "./MovieCard";
+import { useSearchStore } from "../store";
 
-function SearchResults({ error, movies, loading }) {
+function SearchResults() {
+  const { movies, loading, error } = useSearchStore();
   return (
-    <div className="bg-amber-300">
-      <ul className="grid grid-cols-4 gap-4">
+    <div className="bg-gray-900">
+      <ul className="grid grid-cols-6 gap-6 ">
         {loading && <p>Chargement des films...</p>}
         {error && <p>{error}</p>}
         {movies &&
           movies.map((movie) => (
-            <li key={movie.id}>
+            <li 
+            key={movie.id}>
               <MovieCard
                 movie={movie}
                 loading={loading}

@@ -1,11 +1,11 @@
 import React from "react";
-import SearchContainer from "../components/SearchContainer";
+import SearchResults from "../components/SearchResults";
 
 const Search = () => {
 
   return (
     <>
-      <SearchContainer />
+      <SearchResults />
     </>
   );
 };
