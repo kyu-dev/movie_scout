@@ -10,6 +10,8 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 
+
+
 const CarouselComponent = () => {
   const { popular, setPopular, setLoading, setError } = useSearchStore();
 
