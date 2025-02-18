@@ -77,6 +77,32 @@ export async function getPopularMovies() {
 }
 
 /************************************************************
+ Api pour fetcher les films les mieux notés
+ ************************************************************/
+
+export async function getMostRatedMovies() {
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZDBiMWFkZmNmODQ2MjUwY2UwODc4NzM4YWYwNjJlZSIsIm5iZiI6MTczNTQ4OTI5OC45MzYsInN1YiI6IjY3NzE3NzEyN2QxYmM4N2RlNzYxNzNlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-vhRujkWEsk9VRXBZwgcLXUPsARMCNUHYZabsl65fgI'
+    }
+  };
+  
+  try{
+    const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
+    const data = await response.json();
+    return data.results;
+  }
+  catch(err){
+    throw new Error("erreur lors de la récupération des films les mieux noté")
+  }
+  
+}
+
+  
+
+/************************************************************
  Api pour recuperer les détails d'un film
  ************************************************************/
 

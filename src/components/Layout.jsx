@@ -6,8 +6,8 @@ const Layout = () => {
   return (
     <div>
       <SearchBar />
-      <main>
-        <Outlet />
+      <main className='overflow-hidden'>
+        <Outlet/>
       </main>
     </div>
   );

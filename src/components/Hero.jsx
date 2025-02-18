@@ -8,6 +8,7 @@ const Hero = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [randomMovie, setRandomMovie] = useState(null);
   const [genres, setGenres] = useState([]);
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     const fetchRandomMovieImage = async () => {
@@ -20,7 +21,7 @@ const Hero = () => {
         setRandomMovie(selectedMovie);
 
         const movieDetails = await getMovieDetails(selectedMovie.id);
-        
+
         if (movieDetails.backdrop_path) {
           const backdropUrl = `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`;
           setImageUrl(backdropUrl);
@@ -30,6 +31,10 @@ const Hero = () => {
         if (movieDetails.genres) {
           setGenres(movieDetails.genres);
         }
+        if(movieDetails.overview){
+            setDescription(movieDetails.overview)
+        }
+
       } catch (err) {
         console.error("Erreur lors de la récupération de l'image", err);
       } finally {
@@ -38,13 +43,13 @@ const Hero = () => {
     };
 
     fetchRandomMovieImage();
-  }, [popular, setLoading]);
+  }, [popular, setLoading, imageUrl]);
 
   if (loading) return <p>Chargement de l'image...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="w-full h-[600px] relative">
+    <div className="w-full h-[650px] relative">
       {imageUrl && (
         <>
           <img
@@ -53,17 +58,24 @@ const Hero = () => {
             className="w-full h-full object-cover"
           />
           {randomMovie && (
-            <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-4">
+            <div className="absolute inset-0 bg-black/50 flex flex-col  justify-end p-16 gap-4">
               <h2 className="text-white text-4xl font-bold z-10">
                 {randomMovie.title}
               </h2>
               <div className="flex flex-wrap gap-2">
                 {genres.map((genre) => (
-                  <Badge key={genre.id} variant="outline" className="text-white">
+                  <Badge
+                    key={genre.id}
+                    variant="outline"
+                    className="text-white"
+                  >
                     {genre.name}
                   </Badge>
                 ))}
               </div>
+              <p className="text-white w-100 text-sm">   
+                {description}
+              </p>
             </div>
           )}
         </>
