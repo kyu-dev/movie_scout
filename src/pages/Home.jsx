@@ -1,12 +1,14 @@
 import React from 'react'
+import Carousel from '../components/Carousel'
+
 
 
 
 const Home = () => {
   return (
-    <>
-      <p>home</p>
-    </>
+    <div className='bg-blue-950 h-full'>
+      <Carousel/>
+    </div>
   )
 }
 

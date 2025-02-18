@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchMovies } from '../api/api';
-import { useSearchStore } from '../store';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchMovies } from "../api/api";
+import { useSearchStore } from "../store";
 
 const SearchBar = () => {
   const { query, setQuery, setMovies, setLoading, setError } = useSearchStore();
@@ -20,9 +20,9 @@ const SearchBar = () => {
       try {
         const result = await fetchMovies(query);
         setMovies(result);
-        navigate('/search');
+        navigate("/search");
       } catch (err) {
-        setError('Erreur lors de la récupération des films');
+        setError("Erreur lors de la récupération des films");
       } finally {
         setLoading(false);
       }
@@ -32,21 +32,25 @@ const SearchBar = () => {
   }, [query, navigate, setMovies, setLoading, setError]);
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Rechercher un film"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      {query && (<button
-        onClick={() => {
-          navigate("/"),
-          setQuery("")
-        }}
-        className="back-button">
-        X
-      </button>)}
+    <div className="py-7 bg-blue-300">
+      <div className="bg-amber-50 w-fit px-6 py-2 rounded-3xl">
+        <input
+          type="text"
+          placeholder="Rechercher un film"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        {query && (
+          <button
+            onClick={() => {
+              navigate("/"), setQuery("");
+            }}
+            className="back-button"
+          >
+            X
+          </button>
+        )}
+      </div>
     </div>
   );
 };

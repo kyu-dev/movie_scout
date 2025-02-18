@@ -13,7 +13,7 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div
-      className="h-100 relative group"
+      className="h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 relative group"
       onClick={() => {
         setMovieId(movie.id);
         navigate(`/movie/${movie.id}`);
