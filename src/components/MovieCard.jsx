@@ -13,7 +13,7 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div
-      className="w-full relative group"
+      className="h-100 relative group"
       onClick={() => {
         setMovieId(movie.id);
         navigate(`/movie/${movie.id}`);
@@ -29,12 +29,18 @@ const MovieCard = ({ movie }) => {
         className="absolute inset-0
          bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 group-hover:scale-105
           transition-all duration-500 ease-in-out delay-200 group-hover:delay-400 group-focus:delay-100
-          p-4 flex flex-col justify-end rounded-lg z-10"
+          p-4 flex flex-col justify-between rounded-lg z-10"
       >
-        <h3 className="text-white text-lg font-bold">{movie.title}</h3>
-        <p className="text-gray-300 text-sm">
-          Sortie : {formatDate(movie.release_date)}
-        </p>
+        <div className="flex items-center justify-center h-full">
+          <p className="text-gray-300 text-lg">En Savoir plus</p>
+        </div>
+
+        <div className="meta">
+          <h3 className="text-white text-lg font-bold">{movie.title}</h3>
+          <p className="text-gray-300 text-sm">
+            Sortie : {formatDate(movie.release_date)}
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -5,8 +5,8 @@ import { useSearchStore } from "../store";
 function SearchResults() {
   const { movies, loading, error } = useSearchStore();
   return (
-    <div className="bg-gray-900">
-      <ul className="grid grid-cols-6 gap-6 ">
+    <div className="bg-gray-900 p-10">
+      <ul className="grid grid-cols-6 gap-10  ">
         {loading && <p>Chargement des films...</p>}
         {error && <p>{error}</p>}
         {movies &&
