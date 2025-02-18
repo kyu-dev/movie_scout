@@ -8,11 +8,13 @@ export const useSearchStore = create((set) => ({     // renommé car on n'a pas 
   movieId: null, 
   trailerUrl: "",
   popular:[],
+  mostRated:[],
   setQuery: (query) => set({ query }),
   setMovies: (movies) => set({ movies }),
   setLoading: (loading) => set({ loading }), 
   setError: (error) => set({ error }),
   setMovieId: (movieId) => set({ movieId }), 
   setTrailerUrl: (trailerUrl) => set ({trailerUrl}),
-  setPopular: (popular) => set ({popular})
+  setPopular: (popular) => set ({popular}),
+  setMostRated: (mostRated) => set ({mostRated})
 }));

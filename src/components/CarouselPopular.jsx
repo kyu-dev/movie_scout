@@ -10,9 +10,7 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 
-
-
-const CarouselComponent = () => {
+const CarouselPopular = () => {
   const { popular, setPopular, setLoading, setError } = useSearchStore();
 
   useEffect(() => {
@@ -50,4 +48,4 @@ const CarouselComponent = () => {
   );
 };
 
-export default CarouselComponent;
+export default CarouselPopular;
