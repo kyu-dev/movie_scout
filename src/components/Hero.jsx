@@ -9,6 +9,7 @@ const Hero = () => {
   const [randomMovie, setRandomMovie] = useState(null);
   const [genres, setGenres] = useState([]);
   const [description, setDescription] = useState("");
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     const fetchRandomMovieImage = async () => {
@@ -37,13 +38,19 @@ const Hero = () => {
 
       } catch (err) {
         console.error("Erreur lors de la récupération de l'image", err);
+        if (retryCount < 3) {
+          setRetryCount(retryCount + 1);
+          setTimeout(fetchRandomMovieImage, 2000); // Réessayer après 2 secondes
+        } else {
+          setError("Impossible de charger l'image après plusieurs tentatives");
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchRandomMovieImage();
-  }, [popular, setLoading, imageUrl]);
+  }, [popular, setLoading, imageUrl, retryCount]);
 
   if (loading) return <p>Chargement de l'image...</p>;
   if (error) return <p>{error}</p>;

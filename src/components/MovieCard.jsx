@@ -1,10 +1,32 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchStore } from "../store";
+import { Heart } from "lucide-react"; // Import de l'icône Heart
 
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
-  const { setMovieId } = useSearchStore();
+  const { setMovieId, setLikedList, likedList } = useSearchStore();
+
+  const isLiked =
+    likedList?.some((likedMovie) => likedMovie.id === movie.id) || false;
+
+  const handleLike = (e) => {
+    e.stopPropagation(); // Empêche la navigation lors du clic sur le cœur
+
+    // Vérifie si likeList est un tableau
+    if (!Array.isArray(likedList)) {
+      console.error("likeList n'est pas un tableau");
+      return;
+    }
+
+    if (isLiked) {
+      setLikedList(
+        likedList.filter((likedMovie) => likedMovie.id !== movie.id)
+      );
+    } else {
+      setLikedList([...likedList, movie]);
+    }
+  };
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -37,6 +59,14 @@ const MovieCard = ({ movie }) => {
 
         <div className="meta">
           <h3 className="text-white text-lg font-bold">{movie.title}</h3>
+          <button
+            onClick={handleLike}
+            className={`p-1 rounded-full transition-colors ${
+              isLiked ? "text-red-500" : "text-gray-300 hover:text-red-500"
+            }`}
+          >
+            <Heart size={20} fill={isLiked ? "currentColor" : "none"} />
+          </button>
           <p className="text-gray-300 text-sm">
             Sortie : {formatDate(movie.release_date)}
           </p>
