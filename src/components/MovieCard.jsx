@@ -35,7 +35,7 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div
-      className="h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 relative group"
+      className="h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 relative group overflow-hidden transform transition-transform duration-500 ease-in-out hover:scale-105"
       onClick={() => {
         setMovieId(movie.id);
         navigate(`/movie/${movie.id}`);
@@ -49,7 +49,7 @@ const MovieCard = ({ movie }) => {
 
       <div
         className="absolute inset-0
-         bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 group-hover:scale-105
+         bg-blue-900/80 backdrop-blur-sm shadow-lg shadow-blue-800/50 opacity-0 group-hover:opacity-100
           transition-all duration-500 ease-in-out delay-200 group-hover:delay-400 group-focus:delay-100
           p-4 flex flex-col justify-between rounded-lg z-10"
       >

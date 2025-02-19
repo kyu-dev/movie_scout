@@ -21,4 +21,5 @@ export const useSearchStore = create((set) => ({
   setPopular: (popular) => set({ popular }),
   setMostRated: (mostRated) => set({ mostRated }),
   setLikedList: (likedList) => set({ likedList }),
+  setLikeList: (likedList) => set({ likedList }),
 }));

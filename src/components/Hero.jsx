@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getMovieDetails } from "../api/api";
 import { useSearchStore } from "../store";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Hero = () => {
   const { popular, error, loading, setLoading } = useSearchStore();
@@ -9,7 +10,6 @@ const Hero = () => {
   const [randomMovie, setRandomMovie] = useState(null);
   const [genres, setGenres] = useState([]);
   const [description, setDescription] = useState("");
-  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     const fetchRandomMovieImage = async () => {
@@ -32,27 +32,36 @@ const Hero = () => {
         if (movieDetails.genres) {
           setGenres(movieDetails.genres);
         }
-        if(movieDetails.overview){
-            setDescription(movieDetails.overview)
+        if (movieDetails.overview) {
+          setDescription(movieDetails.overview);
         }
-
       } catch (err) {
         console.error("Erreur lors de la récupération de l'image", err);
-        if (retryCount < 3) {
-          setRetryCount(retryCount + 1);
-          setTimeout(fetchRandomMovieImage, 2000); // Réessayer après 2 secondes
-        } else {
-          setError("Impossible de charger l'image après plusieurs tentatives");
-        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchRandomMovieImage();
-  }, [popular, setLoading, imageUrl, retryCount]);
+  }, [popular, imageUrl]);
 
-  if (loading) return <p>Chargement de l'image...</p>;
+  if (loading || !imageUrl) {
+    return (
+      <div className="w-full h-[650px] relative">
+        <Skeleton className="w-full h-full" />
+        <div className="absolute inset-0 p-16 flex flex-col justify-end gap-4">
+          <Skeleton className="h-8 w-1/2" />
+          <div className="flex gap-2">
+            <Skeleton className="h-6 w-20" />
+            <Skeleton className="h-6 w-20" />
+            <Skeleton className="h-6 w-20" />
+          </div>
+          <Skeleton className="h-4 w-full" />
+        </div>
+      </div>
+    );
+  }
+
   if (error) return <p>{error}</p>;
 
   return (
@@ -80,9 +89,7 @@ const Hero = () => {
                   </Badge>
                 ))}
               </div>
-              <p className="text-white w-100 text-sm">   
-                {description}
-              </p>
+              <p className="text-white w-100 text-sm">{description}</p>
             </div>
           )}
         </>

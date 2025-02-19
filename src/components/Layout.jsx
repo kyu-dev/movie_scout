@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import SearchBar from './SearchBar';
+import SearchBar from './Header';
 
 const Layout = () => {
   return (

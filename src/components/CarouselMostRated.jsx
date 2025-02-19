@@ -38,7 +38,10 @@ const CarouselComponent = () => {
         <CarouselContent>
           {mostRated &&
             mostRated.map((movie) => (
-              <CarouselItem className="basis-1/6" key={movie.id}>
+              <CarouselItem
+                key={movie.id}
+                className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+              >
                 <MovieCard movie={movie} />
               </CarouselItem>
             ))}

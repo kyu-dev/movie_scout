@@ -8,8 +8,8 @@ import { useSearchStore } from "@/store";
 const Home = () => {
   const { likedList } = useSearchStore();
   return (
-    <div className="bg-blue-950 h-full">
-      <Hero />
+    <div className="bg-gray-950 h-full">
+      <Hero/>
       <CarouselPopular />
       <CarouselMostRated />
       {likedList.length > 0 && <CarouselRecomandation />}
