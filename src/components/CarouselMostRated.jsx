@@ -30,7 +30,7 @@ const CarouselComponent = () => {
   }, [setMostRated, setLoading, setError]);
 
   return (
-    <div className="p-16">
+    <div id="top-rated" className="p-16">
       <h2 className="text-white text-2xl font-bold mb-5">
         Films les mieux notés
       </h2>

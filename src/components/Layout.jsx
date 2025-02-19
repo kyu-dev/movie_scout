@@ -1,11 +1,11 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import SearchBar from './Header';
+import Header from './Header';
 
 const Layout = () => {
   return (
     <div>
-      <SearchBar />
+      <Header/>
       <main className='overflow-hidden'>
         <Outlet/>
       </main>

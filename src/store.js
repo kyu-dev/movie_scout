@@ -11,6 +11,8 @@ export const useSearchStore = create((set) => ({
   popular: [],
   mostRated: [],
   likedList: [],
+  heroImage: null,
+  heroMovie: null,
 
   setQuery: (query) => set({ query }),
   setMovies: (movies) => set({ movies }),
@@ -21,5 +23,6 @@ export const useSearchStore = create((set) => ({
   setPopular: (popular) => set({ popular }),
   setMostRated: (mostRated) => set({ mostRated }),
   setLikedList: (likedList) => set({ likedList }),
-  setLikeList: (likedList) => set({ likedList }),
+  setHeroImage: (heroImage) => set({ heroImage }),
+  setHeroMovie: (heroMovie) => set({ heroMovie }),
 }));

@@ -30,7 +30,7 @@ const CarouselPopular = () => {
   }, [setPopular, setLoading, setError]);
 
   return (
-    <div className="p-16">
+    <div id="popular" className="p-16">
       <h2 className="text-white text-2xl font-bold mb-5">Films populaires</h2>
       <Carousel>
         <CarouselContent>

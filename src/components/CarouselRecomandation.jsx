@@ -17,7 +17,6 @@ const CarouselRecomandation = () => {
 
   useEffect(() => {
     const fetchRecommendations = async () => {
-      if (likedList.length === 0) return;
 
       setLoading(true);
       try {
@@ -39,7 +38,7 @@ const CarouselRecomandation = () => {
   }, [likedList, setLoading, setError]);
 
   return (
-    <div className="p-16">
+    <div id="recommendations" className="p-16">
       {lastLikedMovie && (
         <h2 className="text-white text-2xl font-bold mb-5">
           Parce que vous avez aimé {lastLikedMovie.title}

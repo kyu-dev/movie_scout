@@ -5,9 +5,16 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Hero = () => {
-  const { popular, error, loading, setLoading } = useSearchStore();
-  const [imageUrl, setImageUrl] = useState(null);
-  const [randomMovie, setRandomMovie] = useState(null);
+  const {
+    popular,
+    error,
+    loading,
+    setLoading,
+    heroImage,
+    setHeroImage,
+    heroMovie,
+    setHeroMovie,
+  } = useSearchStore();
   const [genres, setGenres] = useState([]);
   const [description, setDescription] = useState("");
 
@@ -15,20 +22,37 @@ const Hero = () => {
     const fetchRandomMovieImage = async () => {
       if (!popular || popular.length === 0) return;
 
+      if (heroMovie) {
+        try {
+          const movieDetails = await getMovieDetails(heroMovie.id);
+          if (movieDetails.genres) {
+            setGenres(movieDetails.genres);
+          }
+          if (movieDetails.overview) {
+            setDescription(movieDetails.overview);
+          }
+        } catch (err) {
+          console.error(
+            "Erreur lors de la récupération des détails du film",
+            err
+          );
+        }
+        return;
+      }
+
       try {
         setLoading(true);
         const randomIndex = Math.floor(Math.random() * popular.length);
         const selectedMovie = popular[randomIndex];
-        setRandomMovie(selectedMovie);
+        setHeroMovie(selectedMovie);
 
         const movieDetails = await getMovieDetails(selectedMovie.id);
 
         if (movieDetails.backdrop_path) {
           const backdropUrl = `https://image.tmdb.org/t/p/original${movieDetails.backdrop_path}`;
-          setImageUrl(backdropUrl);
+          setHeroImage(backdropUrl);
         }
 
-        // Récupérer les genres du film
         if (movieDetails.genres) {
           setGenres(movieDetails.genres);
         }
@@ -43,9 +67,9 @@ const Hero = () => {
     };
 
     fetchRandomMovieImage();
-  }, [popular, imageUrl]);
+  }, [popular, setLoading, setHeroImage, setHeroMovie, heroMovie]);
 
-  if (loading || !imageUrl) {
+  if (loading || !heroImage) {
     return (
       <div className="w-full h-[650px] relative">
         <Skeleton className="w-full h-full" />
@@ -66,17 +90,17 @@ const Hero = () => {
 
   return (
     <div className="w-full h-[650px] relative">
-      {imageUrl && (
+      {heroImage && (
         <>
           <img
-            src={imageUrl}
-            alt={`Affiche du film ${randomMovie?.title}`}
+            src={heroImage}
+            alt={`Affiche du film ${heroMovie?.title}`}
             className="w-full h-full object-cover"
           />
-          {randomMovie && (
-            <div className="absolute inset-0 bg-black/50 flex flex-col  justify-end p-16 gap-4">
+          {heroMovie && (
+            <div className="absolute inset-0 bg-black/50 flex flex-col justify-end p-16 gap-4">
               <h2 className="text-white text-4xl font-bold z-10">
-                {randomMovie.title}
+                {heroMovie.title}
               </h2>
               <div className="flex flex-wrap gap-2">
                 {genres.map((genre) => (
