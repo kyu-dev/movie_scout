@@ -1,17 +1,16 @@
+const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
+  },
+};
+
 /************************************************************
  Api pour fetcher un film et ses details depuis une string
  ************************************************************/
 
 export async function fetchMovies(query) {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZDBiMWFkZmNmODQ2MjUwY2UwODc4NzM4YWYwNjJlZSIsIm5iZiI6MTczNTQ4OTI5OC45MzYsInN1YiI6IjY3NzE3NzEyN2QxYmM4N2RlNzYxNzNlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-vhRujkWEsk9VRXBZwgcLXUPsARMCNUHYZabsl65fgI",
-    },
-  };
-
   try {
     const response = await fetch(
       `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=fr-FR&page=1`,
@@ -29,14 +28,6 @@ export async function fetchMovies(query) {
  **************************************************************/
 
 export async function getMoviesVideos(movieID) {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZDBiMWFkZmNmODQ2MjUwY2UwODc4NzM4YWYwNjJlZSIsIm5iZiI6MTczNTQ4OTI5OC45MzYsInN1YiI6IjY3NzE3NzEyN2QxYmM4N2RlNzYxNzNlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-vhRujkWEsk9VRXBZwgcLXUPsARMCNUHYZabsl65fgI",
-    },
-  };
   try {
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/${movieID}/videos?language=fr-FR`,
@@ -55,15 +46,6 @@ export async function getMoviesVideos(movieID) {
  ************************************************************/
 
 export async function getPopularMovies() {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZDBiMWFkZmNmODQ2MjUwY2UwODc4NzM4YWYwNjJlZSIsIm5iZiI6MTczNTQ4OTI5OC45MzYsInN1YiI6IjY3NzE3NzEyN2QxYmM4N2RlNzYxNzNlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-vhRujkWEsk9VRXBZwgcLXUPsARMCNUHYZabsl65fgI",
-    },
-  };
-
   try {
     const response = await fetch(
       "https://api.themoviedb.org/3/movie/popular?language=fr-FR&page=1",
@@ -81,15 +63,6 @@ export async function getPopularMovies() {
  ************************************************************/
 
 export async function getMostRatedMovies() {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZDBiMWFkZmNmODQ2MjUwY2UwODc4NzM4YWYwNjJlZSIsIm5iZiI6MTczNTQ4OTI5OC45MzYsInN1YiI6IjY3NzE3NzEyN2QxYmM4N2RlNzYxNzNlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-vhRujkWEsk9VRXBZwgcLXUPsARMCNUHYZabsl65fgI",
-    },
-  };
-
   try {
     const response = await fetch(
       "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
@@ -107,15 +80,6 @@ export async function getMostRatedMovies() {
  ************************************************************/
 
 export async function getMovieDetails(movieID) {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZDBiMWFkZmNmODQ2MjUwY2UwODc4NzM4YWYwNjJlZSIsIm5iZiI6MTczNTQ4OTI5OC45MzYsInN1YiI6IjY3NzE3NzEyN2QxYmM4N2RlNzYxNzNlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-vhRujkWEsk9VRXBZwgcLXUPsARMCNUHYZabsl65fgI",
-    },
-  };
-
   try {
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/${movieID}?language=fr-FR`,
@@ -133,15 +97,6 @@ export async function getMovieDetails(movieID) {
  ************************************************************/
 
 export async function getRecomandation(movieID) {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlZDBiMWFkZmNmODQ2MjUwY2UwODc4NzM4YWYwNjJlZSIsIm5iZiI6MTczNTQ4OTI5OC45MzYsInN1YiI6IjY3NzE3NzEyN2QxYmM4N2RlNzYxNzNlOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-vhRujkWEsk9VRXBZwgcLXUPsARMCNUHYZabsl65fgI",
-    },
-  };
-
   try {
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/${movieID}/recommendations?language=en-US&page=1`,
