@@ -45,14 +45,14 @@ export async function getMoviesVideos(movieID) {
  Api pour fetcher les films les plus populaire
  ************************************************************/
 
-export async function getPopularMovies() {
+export async function getPopularMovies(page = 1) {
   try {
     const response = await fetch(
-      "https://api.themoviedb.org/3/movie/popular?language=fr-FR&page=1",
+      `https://api.themoviedb.org/3/movie/popular?language=fr-FR&page=${page}`,
       options
     );
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (err) {
     throw new Error("erreur lors de la recupération des films populaires");
   }
@@ -62,14 +62,14 @@ export async function getPopularMovies() {
  Api pour fetcher les films les mieux notés
  ************************************************************/
 
-export async function getMostRatedMovies() {
+export async function getMostRatedMovies(page = 1) {
   try {
     const response = await fetch(
-      "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+      `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`,
       options
     );
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (err) {
     throw new Error("erreur lors de la récupération des films les mieux noté");
   }
@@ -96,14 +96,14 @@ export async function getMovieDetails(movieID) {
  Api qui récupère les recomandation en fonction d'un film
  ************************************************************/
 
-export async function getRecomandation(movieID) {
+export async function getRecomandation(movieID, page = 1) {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieID}/recommendations?language=en-US&page=1`,
+      `https://api.themoviedb.org/3/movie/${movieID}/recommendations?language=en-US&page=${page}`,
       options
     );
     const data = await response.json();
-    return data.results;
+    return data;
   } catch (err) {
     throw new Error("erreur lors de la recupération des recomandations");
   }
@@ -130,11 +130,10 @@ export async function getGenre() {
  Api qui récupère les films par id donc aussi par genre
  ************************************************************/
 
-
-export async function getMoviesByGenre(genreId) {
+export async function getMoviesByGenre(genreId, page = 1) {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=fr-FR&page=1`,
+      `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=fr-FR&page=${page}`,
       options
     );
     return await response.json();

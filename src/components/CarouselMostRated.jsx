@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchStore } from "../store";
 import { getMostRatedMovies } from "../api/api";
 import MovieCard from "./MovieCard";
@@ -9,16 +9,37 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
 
 const CarouselComponent = () => {
   const { setMostRated, mostRated, setLoading, setError } = useSearchStore();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const loadMoreRatedMovies = async () => {
+    if (currentPage >= totalPages) return;
+
+    setLoading(true);
+    try {
+      const nextPage = currentPage + 1;
+      const newRatedMovies = await getMostRatedMovies(nextPage);
+      setMostRated([...mostRated, ...newRatedMovies.results]);
+      setCurrentPage(nextPage);
+      setTotalPages(newRatedMovies.total_pages);
+    } catch (err) {
+      setError("Erreur lors du chargement des films supplémentaires");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchMostRatedMovies = async () => {
       setLoading(true);
       try {
         const mostRatedMovies = await getMostRatedMovies();
-        setMostRated(mostRatedMovies);
+        setMostRated(mostRatedMovies.results);
+        setTotalPages(mostRatedMovies.total_pages);
       } catch (err) {
         setError("Erreur lors de la récupération des films populaires");
       } finally {
@@ -45,6 +66,17 @@ const CarouselComponent = () => {
                 <MovieCard movie={movie} />
               </CarouselItem>
             ))}
+
+          {currentPage < totalPages && (
+            <div className="flex justify-center mt-8">
+              <Button
+                onClick={loadMoreRatedMovies}
+                className="bg-blue-500 hover:bg-blue-600 text-white"
+              >
+                Voir plus
+              </Button>
+            </div>
+          )}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />

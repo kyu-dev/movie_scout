@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchStore } from "../store";
 import { getPopularMovies } from "../api/api";
 import MovieCard from "./MovieCard";
@@ -9,16 +9,37 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
 
 const CarouselPopular = () => {
   const { popular, setPopular, setLoading, setError } = useSearchStore();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const loadMoreMovies = async () => {
+    if (currentPage >= totalPages) return;
+
+    setLoading(true);
+    try {
+      const nextPage = currentPage + 1;
+      const newMovies = await getPopularMovies(nextPage);
+      setPopular([...popular, ...newMovies.results]);
+      setCurrentPage(nextPage);
+      setTotalPages(newMovies.total_pages);
+    } catch (err) {
+      setError("Erreur lors du chargement des films supplémentaires");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchPopularMovies = async () => {
       setLoading(true);
       try {
         const popularMovies = await getPopularMovies();
-        setPopular(popularMovies);
+        setPopular(popularMovies.results);
+        setTotalPages(popularMovies.total_pages);
       } catch (err) {
         setError("Erreur lors de la récupération des films populaires");
       } finally {
@@ -41,12 +62,25 @@ const CarouselPopular = () => {
                 key={movie.id}
               >
                 <MovieCard movie={movie} />
+                
               </CarouselItem>
             ))}
+            {currentPage < totalPages && (
+        <div className="flex justify-center ">
+          <Button
+            onClick={loadMoreMovies}
+            className="bg-blue-500 hover:bg-blue-600 text-white"
+          >
+            Voir plus
+          </Button>
+        </div>
+      )}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+
+      
     </div>
   );
 };

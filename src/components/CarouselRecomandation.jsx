@@ -9,24 +9,47 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import { Button } from "@/components/ui/button";
 
 const CarouselRecomandation = () => {
   const { likedList, setLoading, setError } = useSearchStore();
   const [recommendations, setRecommendations] = useState([]);
   const [lastLikedMovie, setLastLikedMovie] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const loadMoreRecommendations = async () => {
+    if (currentPage >= totalPages || !lastLikedMovie) return;
+
+    setLoading(true);
+    try {
+      const nextPage = currentPage + 1;
+      const newRecommendations = await getRecomandation(
+        lastLikedMovie.id,
+        nextPage
+      );
+      setRecommendations([...recommendations, ...newRecommendations.results]);
+      setCurrentPage(nextPage);
+      setTotalPages(newRecommendations.total_pages);
+    } catch (err) {
+      setError("Erreur lors du chargement des recommandations supplémentaires");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchRecommendations = async () => {
+      if (likedList.length === 0) return;
 
       setLoading(true);
       try {
-        // Récupérer le dernier film liké
         const lastMovie = likedList[likedList.length - 1];
         setLastLikedMovie(lastMovie);
 
-        // Récupérer les recommandations pour ce film
         const movieRecommendations = await getRecomandation(lastMovie.id);
-        setRecommendations(movieRecommendations);
+        setRecommendations(movieRecommendations.results);
+        setTotalPages(movieRecommendations.total_pages);
       } catch (err) {
         setError("Erreur lors de la récupération des recommandations");
       } finally {
@@ -55,6 +78,16 @@ const CarouselRecomandation = () => {
                 <MovieCard movie={movie} />
               </CarouselItem>
             ))}
+          {currentPage < totalPages && (
+            <div className="flex justify-center mt-8">
+              <Button
+                onClick={loadMoreRecommendations}
+                className="bg-blue-500 hover:bg-blue-600 text-white"
+              >
+                Voir plus
+              </Button>
+            </div>
+          )}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
