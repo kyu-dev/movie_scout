@@ -23,10 +23,11 @@ const Home = () => {
   return (
     <div className="bg-gray-900 h-full">
       <Hero />
+      <CarouselGenre/>
       <CarouselPopular />
       <CarouselMostRated />
       {likedList.length > 0 && <CarouselRecomandation />}
-      <CarouselGenre/>
+      
     </div>
   );
 };

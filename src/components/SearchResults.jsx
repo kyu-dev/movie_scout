@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import MovieCard from "./MovieCard";
 import { useSearchStore } from "../store";
 import { useLocation } from "react-router-dom";
-import { getMoviesByGenre } from "../api/api";
+import { getMoviesByGenre, fetchMovies } from "../api/api";
 
 function SearchResults() {
-  const { movies, loading, error, setMovies, setLoading, setError } =
+  const { movies, loading, error, setMovies, setLoading, setError, query } =
     useSearchStore();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const genreId = searchParams.get("genre");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const loaderRef = useRef(null);
 
   const loadMoreMovies = async () => {
     if (currentPage >= totalPages || loading) return;
@@ -19,10 +20,19 @@ function SearchResults() {
     setLoading(true);
     try {
       const nextPage = currentPage + 1;
-      const response = await getMoviesByGenre(genreId, nextPage);
-      setMovies([...movies, ...response.results]);
-      setCurrentPage(nextPage);
-      setTotalPages(response.total_pages);
+      let response;
+      if (genreId) {
+        response = await getMoviesByGenre(genreId, nextPage);
+      } else {
+        response = await fetchMovies(query, nextPage);
+      }
+      if (response && Array.isArray(response.results)) {
+        setMovies([...movies, ...response.results]);
+        setCurrentPage(nextPage);
+        setTotalPages(response.total_pages);
+      } else {
+        throw new Error("Format de réponse inattendu de l'API");
+      }
     } catch (err) {
       setError("Erreur lors du chargement des films supplémentaires");
     } finally {
@@ -31,43 +41,56 @@ function SearchResults() {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } =
-        document.documentElement;
-      const threshold = 100; // Nombre de pixels avant la fin pour déclencher le chargement
-
-      // Vérifie si l'utilisateur est proche du bas de la page
-      if (scrollTop + clientHeight >= scrollHeight - threshold) {
-        // Vérifie qu'on n'est pas déjà en train de charger et qu'il reste des pages à charger
-        if (!loading && currentPage < totalPages) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const first = entries[0];
+        if (first.isIntersecting && !loading && currentPage < totalPages) {
           loadMoreMovies();
         }
+      },
+      {
+        rootMargin: "200px",
+        threshold: 0.1,
+      }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
       }
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, [currentPage, totalPages, loading]);
 
   useEffect(() => {
-    const fetchMoviesByGenre = async () => {
-      if (genreId) {
-        setLoading(true);
-        try {
-          const response = await getMoviesByGenre(genreId, 1);
+    const fetchInitialMovies = async () => {
+      setLoading(true);
+      try {
+        let response;
+        if (genreId) {
+          response = await getMoviesByGenre(genreId, 1);
+        } else {
+          response = await fetchMovies(query, 1);
+        }
+        if (response && Array.isArray(response.results)) {
           setMovies(response.results);
           setTotalPages(response.total_pages);
           setCurrentPage(1);
-        } catch (err) {
-          setError("Erreur lors de la récupération des films");
-        } finally {
-          setLoading(false);
+        } else {
+          throw new Error("Format de réponse inattendu de l'API");
         }
+      } catch (err) {
+        setError("Erreur lors de la récupération des films");
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchMoviesByGenre();
-  }, [genreId, setMovies, setLoading, setError]);
+    fetchInitialMovies();
+  }, [genreId, query, setMovies, setLoading, setError]);
 
   return (
     <div className="bg-gray-900 p-10">
@@ -81,11 +104,13 @@ function SearchResults() {
             </li>
           ))}
       </ul>
-      {loading && currentPage > 1 && (
-        <div className="flex justify-center mt-8">
-          <p>Chargement des films supplémentaires...</p>
-        </div>
-      )}
+      <div ref={loaderRef} className="h-20">
+        {loading && currentPage > 1 && (
+          <div className="flex justify-center mt-8">
+            <p>Chargement des films supplémentaires...</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

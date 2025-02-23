@@ -20,7 +20,11 @@ const SearchBar = () => {
       setError(null);
       try {
         const result = await fetchMovies(query);
-        setMovies(result);
+        if (result && Array.isArray(result.results)) {
+          setMovies(result.results);
+        } else {
+          throw new Error("Format de réponse inattendu de l'API");
+        }
         navigate("/search");
       } catch (err) {
         setError("Erreur lors de la récupération des films");

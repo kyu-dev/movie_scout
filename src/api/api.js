@@ -10,14 +10,17 @@ const options = {
  Api pour fetcher un film et ses details depuis une string
  ************************************************************/
 
-export async function fetchMovies(query) {
+export async function fetchMovies(query, page = 1) {
   try {
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=fr-FR&page=1`,
+      `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=fr-FR&page=${page}`,
       options
     );
     const data = await response.json();
-    return data.results;
+    if (!data.results) {
+      throw new Error("Réponse de l'API invalide");
+    }
+    return data;
   } catch (err) {
     throw new Error("Erreur lors de la récupération des films");
   }
