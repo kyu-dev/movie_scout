@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 const CarouselComponent = () => {
-  const { setMostRated, mostRated, setLoading, setError } = useSearchStore();
+  const { setMostRated, mostRated, setLoading } = useSearchStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -27,7 +27,7 @@ const CarouselComponent = () => {
       setCurrentPage(nextPage);
       setTotalPages(newRatedMovies.total_pages);
     } catch (err) {
-      setError("Erreur lors du chargement des films supplémentaires");
+      console.error("Erreur lors du chargement des films supplémentaires", err);
     } finally {
       setLoading(false);
     }
@@ -41,14 +41,17 @@ const CarouselComponent = () => {
         setMostRated(mostRatedMovies.results);
         setTotalPages(mostRatedMovies.total_pages);
       } catch (err) {
-        setError("Erreur lors de la récupération des films populaires");
+        console.error(
+          "Erreur lors de la récupération des films populaires",
+          err
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchMostRatedMovies();
-  }, [setMostRated, setLoading, setError]);
+  }, [setMostRated, setLoading]);
 
   return (
     <div id="top-rated" className="p-16">

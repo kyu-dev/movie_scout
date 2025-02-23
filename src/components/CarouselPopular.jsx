@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 const CarouselPopular = () => {
-  const { popular, setPopular, setLoading, setError } = useSearchStore();
+  const { popular, setPopular, setLoading } = useSearchStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -27,7 +27,7 @@ const CarouselPopular = () => {
       setCurrentPage(nextPage);
       setTotalPages(newMovies.total_pages);
     } catch (err) {
-      setError("Erreur lors du chargement des films supplémentaires");
+      console.error("Erreur lors du chargement des films supplémentaires", err);
     } finally {
       setLoading(false);
     }
@@ -41,14 +41,17 @@ const CarouselPopular = () => {
         setPopular(popularMovies.results);
         setTotalPages(popularMovies.total_pages);
       } catch (err) {
-        setError("Erreur lors de la récupération des films populaires");
+        console.error(
+          "Erreur lors de la récupération des films populaires",
+          err
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchPopularMovies();
-  }, [setPopular, setLoading, setError]);
+  }, [setPopular, setLoading]);
 
   return (
     <div id="popular" className="p-16">

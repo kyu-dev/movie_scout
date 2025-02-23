@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { fetchMovies } from "../api/api";
 import { useSearchStore } from "../store";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const SearchBar = () => {
-  const { query, setQuery, setMovies, setLoading, setError } = useSearchStore();
+  const { query, setQuery, setMovies, setLoading } = useSearchStore();
   const navigate = useNavigate();
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     if (!query) {

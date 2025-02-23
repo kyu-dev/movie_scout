@@ -5,14 +5,14 @@ import { useLocation } from "react-router-dom";
 import { getMoviesByGenre, fetchMovies } from "../api/api";
 
 function SearchResults() {
-  const { movies, loading, error, setMovies, setLoading, setError, query } =
-    useSearchStore();
+  const { movies, loading, setMovies, setLoading, query } = useSearchStore();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const genreId = searchParams.get("genre");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const loaderRef = useRef(null);
+  const [error, setError] = useState("");
 
   const loadMoreMovies = async () => {
     if (currentPage >= totalPages || loading) return;

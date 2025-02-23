@@ -5,12 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { use } from "react";
 
 const Hero = () => {
   const navigate = useNavigate();
   const {
     popular,
-    error,
     heroImage,
     setHeroImage,
     heroMovie,
@@ -20,6 +20,7 @@ const Hero = () => {
   const [genres, setGenres] = useState([]);
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchRandomMovieImage = async () => {
@@ -39,6 +40,7 @@ const Hero = () => {
             "Erreur lors de la récupération des détails du film",
             err
           );
+          setError("Erreur lors de la récupération des détails du film");
         }
         return;
       }
@@ -64,6 +66,7 @@ const Hero = () => {
         }
       } catch (err) {
         console.error("Erreur lors de la récupération de l'image", err);
+        setError("Erreur lors de la récupération des informations du film");
       } finally {
         setLoading(false);
       }

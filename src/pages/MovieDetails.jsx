@@ -3,8 +3,9 @@ import { getMoviesVideos } from "../api/api";
 import { useSearchStore } from "../store";
 
 const MovieDetails = () => {
-  const { movieId, error, loading,setError, trailerUrl, setTrailerUrl, setLoading } = useSearchStore();
-
+  const { movieId, loading, trailerUrl, setTrailerUrl, setLoading } =
+    useSearchStore();
+  const [error, setError] = useState(null);
   // Ce useEffect est déclenché à chaque changement de movieId
   // Il récupère l'URL de la bande-annonce via l'API video de tmdb
   useEffect(() => {

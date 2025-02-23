@@ -5,7 +5,6 @@ export const useSearchStore = create((set) => ({
   query: "",
   movies: [],
   loading: false,
-  error: null,
   movieId: null,
   trailerUrl: "",
   popular: [],
@@ -13,12 +12,10 @@ export const useSearchStore = create((set) => ({
   likedList: [],
   heroImage: null,
   heroMovie: null,
-  
 
   setQuery: (query) => set({ query }),
   setMovies: (movies) => set({ movies }),
   setLoading: (loading) => set({ loading }),
-  setError: (error) => set({ error }),
   setMovieId: (movieId) => set({ movieId }),
   setTrailerUrl: (trailerUrl) => set({ trailerUrl }),
   setPopular: (popular) => set({ popular }),

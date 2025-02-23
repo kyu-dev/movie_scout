@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 const CarouselRecomandation = () => {
-  const { likedList, setLoading, setError } = useSearchStore();
+  const { likedList, setLoading } = useSearchStore();
   const [recommendations, setRecommendations] = useState([]);
   const [lastLikedMovie, setLastLikedMovie] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +32,10 @@ const CarouselRecomandation = () => {
       setCurrentPage(nextPage);
       setTotalPages(newRecommendations.total_pages);
     } catch (err) {
-      setError("Erreur lors du chargement des recommandations supplémentaires");
+      console.error(
+        "Erreur lors du chargement des recommandations supplémentaires",
+        err
+      );
     } finally {
       setLoading(false);
     }
@@ -51,14 +54,17 @@ const CarouselRecomandation = () => {
         setRecommendations(movieRecommendations.results);
         setTotalPages(movieRecommendations.total_pages);
       } catch (err) {
-        setError("Erreur lors de la récupération des recommandations");
+        console.error(
+          "Erreur lors de la récupération des recommandations",
+          err
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchRecommendations();
-  }, [likedList, setLoading, setError]);
+  }, [likedList, setLoading]);
 
   return (
     <div id="recommendations" className="p-16">
