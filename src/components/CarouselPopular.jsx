@@ -56,31 +56,28 @@ const CarouselPopular = () => {
       <Carousel>
         <CarouselContent>
           {popular &&
-            popular.map((movie) => (
+            popular.map((movie, index) => (
               <CarouselItem
                 className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
-                key={movie.id}
+                key={`${movie.id}-${index}`}
               >
                 <MovieCard movie={movie} />
-                
               </CarouselItem>
             ))}
-            {currentPage < totalPages && (
-        <div className="flex justify-center ">
-          <Button
-            onClick={loadMoreMovies}
-            className="bg-blue-500 hover:bg-blue-600 text-white"
-          >
-            Voir plus
-          </Button>
-        </div>
-      )}
+          {currentPage < totalPages && (
+            <div className="flex justify-center ">
+              <Button
+                onClick={loadMoreMovies}
+                className="bg-blue-500 hover:bg-blue-600 text-white"
+              >
+                Voir plus
+              </Button>
+            </div>
+          )}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-
-      
     </div>
   );
 };

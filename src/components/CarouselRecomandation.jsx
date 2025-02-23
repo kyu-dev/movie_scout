@@ -70,10 +70,10 @@ const CarouselRecomandation = () => {
       <Carousel>
         <CarouselContent>
           {recommendations &&
-            recommendations.map((movie) => (
+            recommendations.map((movie, index) => (
               <CarouselItem
                 className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
-                key={movie.id}
+                key={`${movie.id}-${index}`}
               >
                 <MovieCard movie={movie} />
               </CarouselItem>

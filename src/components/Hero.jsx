@@ -3,20 +3,23 @@ import { getMovieDetails } from "../api/api";
 import { useSearchStore } from "../store";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   const {
     popular,
     error,
-    loading,
-    setLoading,
     heroImage,
     setHeroImage,
     heroMovie,
     setHeroMovie,
+    setMovieId,
   } = useSearchStore();
   const [genres, setGenres] = useState([]);
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchRandomMovieImage = async () => {
@@ -113,6 +116,15 @@ const Hero = () => {
                   </Badge>
                 ))}
               </div>
+              <Button
+                className="bg-blue-600 hover:bg-blue-700 w-fit"
+                onClick={() => {
+                  setMovieId(heroMovie.id);
+                  navigate(`/movie/${heroMovie.id}`);
+                }}
+              >
+                En savoir plus
+              </Button>
               <p className="text-white w-100 text-sm">{description}</p>
             </div>
           )}
