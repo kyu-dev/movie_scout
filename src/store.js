@@ -13,6 +13,7 @@ export const useSearchStore = create((set) => ({
   likedList: [],
   heroImage: null,
   heroMovie: null,
+  
 
   setQuery: (query) => set({ query }),
   setMovies: (movies) => set({ movies }),

@@ -108,3 +108,37 @@ export async function getRecomandation(movieID) {
     throw new Error("erreur lors de la recupération des recomandations");
   }
 }
+
+/************************************************************
+ Api qui récupère les genres des films en fr 
+ ************************************************************/
+
+export async function getGenre() {
+  try {
+    const response = await fetch(
+      "https://api.themoviedb.org/3/genre/movie/list?language=fr",
+      options
+    );
+    const data = await response.json();
+    return data.genres;
+  } catch (err) {
+    throw new Error("erreur lors de la recuperation des genre");
+  }
+}
+
+/************************************************************
+ Api qui récupère les films par id donc aussi par genre
+ ************************************************************/
+
+
+export async function getMoviesByGenre(genreId) {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=fr-FR&page=1`,
+      options
+    );
+    return await response.json();
+  } catch (err) {
+    throw new Error("Erreur lors de la récupération des films par genre");
+  }
+}

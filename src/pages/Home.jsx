@@ -5,6 +5,7 @@ import CarouselMostRated from "../components/CarouselMostRated";
 import CarouselRecomandation from "@/components/CarouselRecomandation";
 import { useSearchStore } from "@/store";
 import { useLocation } from "react-router-dom";
+import CarouselGenre from "@/components/CarouselGenre";
 
 const Home = () => {
   const { likedList } = useSearchStore();
@@ -25,6 +26,7 @@ const Home = () => {
       <CarouselPopular />
       <CarouselMostRated />
       {likedList.length > 0 && <CarouselRecomandation />}
+      <CarouselGenre/>
     </div>
   );
 };
