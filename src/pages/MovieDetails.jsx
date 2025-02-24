@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getMoviesVideos, getMovieDetails } from "../api/api";
 import { useSearchStore } from "../store";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "../components/ui/button";
 import {
   Dialog,
@@ -65,22 +66,23 @@ const MovieDetails = () => {
   }
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center"
-      style={{
-        backgroundImage: `url(https://image.tmdb.org/t/p/original${movieDetails.backdrop_path})`,
-      }}
-    >
-      <div className="bg-black/80 min-h-screen p-8">
-        <div className="max-w-7xl mx-auto bg-gray-900/90 rounded-lg shadow-lg p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
+    <div className="min-h-screen bg-cover bg-center fade-in">
+      <div className="bg-gray-950 backdrop-blur-sm min-h-screen p-8">
+        <div className="max-w-7xl mx-auto bg-gray-900/90 rounded-lg shadow-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 relative overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center z-0 blur-xl opacity-50"
+            style={{
+              backgroundImage: `url(https://image.tmdb.org/t/p/original${movieDetails.backdrop_path})`,
+            }}
+          ></div>
+          <div className="z-10">
             <img
               src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`}
               alt={movieDetails.title}
               className="w-full rounded-lg shadow-lg"
             />
           </div>
-          <div className="text-white space-y-4">
+          <div className="text-white space-y-4 z-10">
             <h1 className="text-4xl font-bold">{movieDetails.title}</h1>
             <p className="text-gray-300">{movieDetails.tagline}</p>
 
@@ -95,12 +97,9 @@ const MovieDetails = () => {
 
             <div className="flex flex-wrap gap-2">
               {movieDetails.genres?.map((genre) => (
-                <span
-                  key={genre.id}
-                  className="bg-gray-700 px-3 py-1 rounded-full text-sm"
-                >
+                <Badge key={genre.id} variant="outline" className="text-white">
                   {genre.name}
-                </span>
+                </Badge>
               ))}
             </div>
 

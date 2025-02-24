@@ -175,7 +175,7 @@ const CarouselItem = React.forwardRef(({ className, ...props }, ref) => {
         "min-w-0 shrink-0 grow-0 basis-full",
         orientation === "horizontal" ? "pl-4" : "pt-4",
         className,
-        "hover:z-10" // Ajoutez cette classe pour gérer l'effet hover
+        "hover:scale-105 transition-transform duration-300 ease-in-out"
       )}
       {...props}
     />

@@ -35,7 +35,7 @@ const MovieCard = ({ movie }) => {
 
   return (
     <div
-      className="h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 relative group overflow-hidden transform transition-transform duration-500 ease-in-out hover:scale-105"
+      className="h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 relative group overflow-hidden transform transition-transform duration-500 ease-in-out "
       onClick={() => {
         setMovieId(movie.id);
         navigate(`/movie/${movie.id}`);

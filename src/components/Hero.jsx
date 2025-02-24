@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { use } from "react";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -101,36 +100,36 @@ const Hero = () => {
           <img
             src={heroImage}
             alt={`Affiche du film ${heroMovie?.title}`}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-1000 ease-in-out"
           />
-          {heroMovie && (
-            <div className="absolute inset-0 bg-black/50 flex flex-col justify-end p-16 gap-4">
-              <h2 className="text-white text-4xl font-bold z-10">
-                {heroMovie.title}
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {genres.map((genre) => (
-                  <Badge
-                    key={genre.id}
-                    variant="outline"
-                    className="text-white"
-                  >
-                    {genre.name}
-                  </Badge>
-                ))}
-              </div>
-              <Button
-                className="bg-blue-600 hover:bg-blue-700 w-fit"
-                onClick={() => {
-                  setMovieId(heroMovie.id);
-                  navigate(`/movie/${heroMovie.id}`);
-                }}
-              >
-                En savoir plus
-              </Button>
-              <p className="text-white w-100 text-sm">{description}</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-16 gap-4">
+            <h2 className="text-white text-5xl font-bold z-10 drop-shadow-2xl">
+              {heroMovie.title}
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {genres.map((genre) => (
+                <Badge
+                  key={genre.id}
+                  variant="outline"
+                  className="text-white bg-black/20 backdrop-blur-sm border-white/10 hover:bg-black/30"
+                >
+                  {genre.name}
+                </Badge>
+              ))}
             </div>
-          )}
+            <Button
+              className="bg-blue-600 hover:bg-blue-700 w-fit transform transition-all hover:scale-105 active:scale-95"
+              onClick={() => {
+                setMovieId(heroMovie.id);
+                navigate(`/movie/${heroMovie.id}`);
+              }}
+            >
+              En savoir plus
+            </Button>
+            <p className="text-white/80 w-100 text-sm max-w-2xl leading-relaxed">
+              {description}
+            </p>
+          </div>
         </>
       )}
     </div>
