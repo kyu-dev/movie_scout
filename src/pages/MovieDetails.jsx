@@ -9,15 +9,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../components/ui/dialog";
+import { Heart } from "lucide-react";
 
 const MovieDetails = () => {
-  const { movieId } = useSearchStore();
+  const { movieId, likedList, setLikedList } = useSearchStore();
   const [trailerUrl, setTrailerUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [hasTrailer, setHasTrailer] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
+  const [isLiked, setIsLiked] = useState(false);
 
   const checkTrailerAvailability = async () => {
     try {
@@ -42,6 +44,13 @@ const MovieDetails = () => {
     getDetails();
   }, [movieId]);
 
+  useEffect(() => {
+    if (movieDetails) {
+      const liked = likedList?.some((movie) => movie.id === movieDetails.id);
+      setIsLiked(liked);
+    }
+  }, [movieDetails, likedList]);
+
   const handleTrailerClick = async () => {
     setLoading(true);
     setError(null);
@@ -59,6 +68,17 @@ const MovieDetails = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLike = () => {
+    if (!movieDetails) return;
+
+    if (isLiked) {
+      setLikedList(likedList.filter((movie) => movie.id !== movieDetails.id));
+    } else {
+      setLikedList([...likedList, movieDetails]);
+    }
+    setIsLiked(!isLiked);
   };
 
   if (!movieDetails) {
@@ -105,11 +125,24 @@ const MovieDetails = () => {
 
             <p className="text-gray-300">{movieDetails.overview}</p>
 
-            {hasTrailer && (
-              <Button onClick={handleTrailerClick} className="mt-4">
-                {loading ? "Chargement..." : "Voir le trailer"}
-              </Button>
-            )}
+            <div className="flex items-center gap-2 mt-4">
+              {hasTrailer && (
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700 w-fit transform transition-all hover:scale-105 active:scale-95"
+                  onClick={handleTrailerClick}
+                >
+                  {loading ? "Chargement..." : "Voir le trailer"}
+                </Button>
+              )}
+              <button
+                onClick={handleLike}
+                className={`p-1 rounded-full transition-colors ${
+                  isLiked ? "text-red-500" : "text-gray-300 hover:text-red-500"
+                }`}
+              >
+                <Heart size={20} fill={isLiked ? "currentColor" : "none"} />
+              </button>
+            </div>
 
             {error && <p className="text-red-500">{error}</p>}
           </div>
