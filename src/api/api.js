@@ -144,3 +144,19 @@ export async function getMoviesByGenre(genreId, page = 1) {
     throw new Error("Erreur lors de la récupération des films par genre");
   }
 }
+
+/************************************************************
+ Api qui recupere le casting d'un film 
+ ************************************************************/
+export async function getCasting(movieID) {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieID}/credits?language=fr-FR`,
+      options
+    );
+    const data = await response.json();
+    return data; // Retourne l'objet complet avec cast et crew
+  } catch (err) {
+    throw new Error("Erreur lors de la récupération du casting");
+  }
+}

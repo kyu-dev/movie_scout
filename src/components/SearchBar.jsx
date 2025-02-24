@@ -4,11 +4,12 @@ import { fetchMovies } from "../api/api";
 import { useSearchStore } from "../store";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Search, X } from "lucide-react";
 
 const SearchBar = () => {
   const { query, setQuery, setMovies, setLoading } = useSearchStore();
   const navigate = useNavigate();
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!query) {
@@ -39,27 +40,29 @@ const SearchBar = () => {
   }, [query, navigate, setMovies, setLoading, setError]);
 
   return (
-    <div className="bg-amber-50 w-full md:w-fit px-4 md:px-6 py-2 rounded-3xl">
+    <div className="bg-amber-50 w-full max-w-2xl px-4 py-2 rounded-3xl shadow-lg">
       <div className="flex items-center gap-2">
+        <Search className="text-gray-500 w-5 h-5" />
         <input
           type="text"
-          placeholder="Rechercher un film"
+          placeholder="Rechercher un film..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full bg-transparent focus:outline-none"
+          className="w-full bg-transparent focus:outline-none placeholder-gray-400 text-sm sm:text-base flex-1 min-w-0"
         />
-        {query && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              navigate("/");
-              setQuery("");
-            }}
-          >
-            X
-          </Button>
-        )}
+        <Button
+          variant="ghost"
+          size="sm"
+          className={`p-1 hover:bg-amber-100 rounded-full transition-opacity ${
+            query ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+          onClick={() => {
+            navigate("/");
+            setQuery("");
+          }}
+        >
+          <X className="w-4 h-4 text-gray-500" />
+        </Button>
       </div>
     </div>
   );

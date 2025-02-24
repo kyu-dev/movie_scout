@@ -98,11 +98,13 @@ function SearchResults() {
         {loading && <p>Chargement des films...</p>}
         {error && <p>{error}</p>}
         {movies &&
-          movies.map((movie, index) => (
-            <li key={`${movie.id}-${index}`}>
-              <MovieCard movie={movie} />
-            </li>
-          ))}
+          movies
+            .filter((movie) => movie.poster_path)   // filtre les élément qui n'on pas d'image pour ne pas afficher les faux films
+            .map((movie, index) => (
+              <li key={`${movie.id}-${index}`}>
+                <MovieCard movie={movie} />
+              </li>
+            ))}
       </ul>
       <div ref={loaderRef} className="h-20">
         {loading && currentPage > 1 && (

@@ -94,15 +94,15 @@ const Hero = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="w-full h-[650px] relative">
+    <div className="w-full h-[650px] relative overflow-hidden">
       {heroImage && (
         <>
           <img
             src={heroImage}
             alt={`Affiche du film ${heroMovie?.title}`}
-            className="w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-1000 ease-in-out"
+            className="w-full h-full object-cover transform "
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-16 gap-4">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8 md:p-12 lg:p-16 gap-6">
             <h2 className="text-white text-5xl font-bold z-10 drop-shadow-2xl">
               {heroMovie.title}
             </h2>
@@ -126,7 +126,7 @@ const Hero = () => {
             >
               En savoir plus
             </Button>
-            <p className="text-white/80 w-100 text-sm max-w-2xl leading-relaxed">
+            <p className="text-white/80 w-full md:w-100 text-sm max-w-2xl leading-relaxed  md:px-0">
               {description}
             </p>
           </div>
