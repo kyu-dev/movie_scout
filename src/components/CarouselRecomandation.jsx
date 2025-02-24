@@ -67,7 +67,7 @@ const CarouselRecomandation = () => {
   }, [likedList, setLoading]);
 
   return (
-    <div id="recommendations" className="p-16">
+    <div id="recommendations" className="p-8 sm:p-14">
       {lastLikedMovie && (
         <h2 className="text-white text-2xl font-bold mb-5">
           Parce que vous avez aimé {lastLikedMovie.title}
@@ -95,8 +95,10 @@ const CarouselRecomandation = () => {
             </div>
           )}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <div className="hidden sm:block">
+          <CarouselPrevious />
+          <CarouselNext />
+        </div>
       </Carousel>
     </div>
   );

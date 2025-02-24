@@ -94,13 +94,13 @@ const Hero = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="w-full h-[650px] relative overflow-hidden">
+    <div className="w-full h-full relative overflow-hidden">
       {heroImage && (
         <>
           <img
             src={heroImage}
             alt={`Affiche du film ${heroMovie?.title}`}
-            className="w-full h-full object-cover transform "
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8 md:p-12 lg:p-16 gap-6">
             <h2 className="text-white text-5xl font-bold z-10 drop-shadow-2xl">

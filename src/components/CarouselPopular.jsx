@@ -54,7 +54,7 @@ const CarouselPopular = () => {
   }, [setPopular, setLoading]);
 
   return (
-    <div id="popular" className="p-16">
+    <div id="popular" className="p-8 sm:p-14">
       <h2 className="text-white text-2xl font-bold mb-5">Films populaires</h2>
       <Carousel>
         <CarouselContent>
@@ -78,8 +78,10 @@ const CarouselPopular = () => {
             </div>
           )}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <div className="hidden sm:block">
+          <CarouselPrevious />
+          <CarouselNext />
+        </div>
       </Carousel>
     </div>
   );

@@ -54,7 +54,7 @@ const CarouselComponent = () => {
   }, [setMostRated, setLoading]);
 
   return (
-    <div id="top-rated" className="p-16">
+    <div id="top-rated" className="p-8 sm:p-14">
       <h2 className="text-white text-2xl font-bold mb-5">
         Films les mieux notés
       </h2>
@@ -81,8 +81,10 @@ const CarouselComponent = () => {
             </div>
           )}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <div className="hidden sm:block">
+          <CarouselPrevious />
+          <CarouselNext />
+        </div>
       </Carousel>
     </div>
   );

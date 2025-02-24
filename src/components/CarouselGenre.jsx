@@ -28,7 +28,7 @@ const GenreList = () => {
   }, []);
 
   return (
-    <div className="text-white p-16">
+    <div className="text-white p-8 sm:p-16">
       <h2 className="text-2xl font-bold mb-4">Tous les Genres</h2>
       <Carousel>
         <CarouselContent>
@@ -44,8 +44,10 @@ const GenreList = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <div className="hidden sm:block">
+          <CarouselPrevious />
+          <CarouselNext />
+        </div>
       </Carousel>
     </div>
   );
