@@ -100,12 +100,12 @@ const Hero = () => {
           <img
             src={heroImage}
             alt={`Affiche du film ${heroMovie?.title}`}
-            className="w-full h-full object-cover"
+            className="w-full  md:h-full h-110 object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col 
           items-center md:items-start
           justify-center md:justify-end p-8 md:p-12 lg:p-16 md:gap-6 gap-2">
-            <h2 className="text-white text-5xl font-bold z-10 drop-shadow-2xl">
+            <h2 className="text-white md:text-5xl text-3xl font-bold z-10 drop-shadow-2xl">
               {heroMovie.title}
             </h2>
             <div className="flex flex-wrap gap-2">
