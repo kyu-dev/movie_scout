@@ -102,7 +102,9 @@ const Hero = () => {
             alt={`Affiche du film ${heroMovie?.title}`}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col justify-end p-8 md:p-12 lg:p-16 gap-6">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex flex-col 
+          items-center md:items-start
+          justify-center md:justify-end p-8 md:p-12 lg:p-16 md:gap-6 gap-2">
             <h2 className="text-white text-5xl font-bold z-10 drop-shadow-2xl">
               {heroMovie.title}
             </h2>
@@ -118,7 +120,7 @@ const Hero = () => {
               ))}
             </div>
             <Button
-              className="bg-blue-600 hover:bg-blue-700 w-fit transform transition-all hover:scale-105 active:scale-95"
+              className="bg-blue-600 hover:bg-blue-700 w-fit transform transition-all hover:scale-105 active:scale-95  "
               onClick={() => {
                 setMovieId(heroMovie.id);
                 navigate(`/movie/${heroMovie.id}`);
@@ -126,7 +128,7 @@ const Hero = () => {
             >
               En savoir plus
             </Button>
-            <p className="text-white/80 w-full md:w-100 text-sm max-w-2xl leading-relaxed  md:px-0">
+            <p className="text-white/80 w-full hidden md:block non text-sm max-w-2xl leading-relaxed  md:px-0">
               {description}
             </p>
           </div>
