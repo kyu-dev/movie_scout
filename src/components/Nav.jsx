@@ -44,7 +44,7 @@ const Nav = () => {
         className={cn(
           "container mx-auto px-4 md:flex justify-center space-x-8",
           isOpen
-            ? "absolute top-16 right-0 bg-gray-900 w-full z-50 flex flex-col space-x-0 space-y-4 p-4"
+            ? "absolute right-0 bg-gray-900/95 backdrop-blur-sm h-full z-50 flex flex-col items-center justify-center space-x-0 space-y-10"
             : "hidden md:flex"
         )}
       >

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getGenre } from "@/api/api";
-import { useSearchStore } from "@/store";
 import { useNavigate } from "react-router-dom";
 import {
   Carousel,
@@ -38,7 +37,7 @@ const GenreList = () => {
               className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
               onClick={() => navigate(`/search?genre=${genre.id}`)}
             >
-              <div className="bg-gray-800 w-auto h-60 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center">
+              <div className="bg-gray-800 w-auto h-50 rounded-lg hover:bg-gray-700 transition-colors flex items-center justify-center">
                 <h3 className="text-lg font-semibold">{genre.name}</h3>
               </div>
             </CarouselItem>

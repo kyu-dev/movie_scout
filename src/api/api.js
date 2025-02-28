@@ -113,7 +113,7 @@ export async function getRecomandation(movieID, page = 1) {
 }
 
 /************************************************************
- Api qui récupère les genres des films en fr 
+ Api qui récupère les genres des films en fr
  ************************************************************/
 
 export async function getGenre() {
@@ -146,7 +146,7 @@ export async function getMoviesByGenre(genreId, page = 1) {
 }
 
 /************************************************************
- Api qui recupere le casting d'un film 
+ Api qui recupere le casting d'un film
  ************************************************************/
 export async function getCasting(movieID) {
   try {
@@ -160,3 +160,6 @@ export async function getCasting(movieID) {
     throw new Error("Erreur lors de la récupération du casting");
   }
 }
+
+
+
