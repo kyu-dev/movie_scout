@@ -1,77 +1,88 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Nav = () => {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleScrollToSection = (sectionId) => {
-    if (window.location.pathname !== "/") {
-      navigate("/", { state: { scrollTo: sectionId } });
-      return;
-    }
-
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+  const handleSectionClick = (section) => {
+    navigate('/', { state: { scrollTo: section } });
     setIsOpen(false);
   };
-
-  React.useEffect(() => {
-    const sectionId = sessionStorage.getItem("scrollToSection");
-    if (sectionId) {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" });
-      }
-      sessionStorage.removeItem("scrollToSection");
-    }
-  }, []);
 
   return (
     <nav>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden p-2 text-amber-50 hover:text-amber-200"
+        className="md:hidden p-2 text-amber-50 hover:text-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        {isOpen ? (
+          <X size={28} className="transition-transform duration-300 ease-in-out" />
+        ) : (
+          <Menu size={28} className="transition-transform duration-300 ease-in-out" />
+        )}
       </button>
 
       <div
         className={cn(
-          "container mx-auto px-4 md:flex justify-center space-x-8",
+          "fixed inset-0 bg-gray-900/95 backdrop-blur-sm z-40 transition-all duration-300 ease-in-out",
           isOpen
-            ? "absolute right-0 bg-gray-900/95 backdrop-blur-sm h-full z-50 flex flex-col items-center justify-center space-x-0 space-y-10"
-            : "hidden md:flex"
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 translate-x-full pointer-events-none"
         )}
       >
         <button
-          onClick={() => handleScrollToSection("popular")}
-          className={cn(
-            "text-amber-50 hover:text-amber-200 transition-colors duration-300 text-lg font-medium text-left md:text-center"
-          )}
+          onClick={() => setIsOpen(false)}
+          className="absolute top-4 right-4 p-2 text-amber-50 hover:text-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
+        >
+          <X size={28} />
+        </button>
+
+        <div className="container mx-auto h-full flex flex-col items-center justify-center space-y-8">
+          <button
+            onClick={() => handleSectionClick('popular')}
+            className="text-amber-50 hover:text-amber-200 text-2xl font-medium transition-colors duration-300"
+          >
+            Populaires
+          </button>
+          <button
+            onClick={() => handleSectionClick('top-rated')}
+            className="text-amber-50 hover:text-amber-200 text-2xl font-medium transition-colors duration-300"
+          >
+            Les Mieux Notés
+          </button>
+          <Link
+            to="/favorites"
+            className="text-amber-50 hover:text-amber-200 text-2xl font-medium transition-colors duration-300"
+            onClick={() => setIsOpen(false)}
+          >
+            Favoris
+          </Link>
+        </div>
+      </div>
+
+      <div className="hidden md:flex container mx-auto px-4 justify-center space-x-8">
+        <button
+          onClick={() => handleSectionClick('popular')}
+          className="text-amber-50 hover:text-amber-200 transition-colors duration-300 text-sm font-medium"
         >
           Populaires
         </button>
         <button
-          onClick={() => handleScrollToSection("top-rated")}
-          className={cn(
-            "text-amber-50 hover:text-amber-200 transition-colors duration-300 text-lg font-medium text-left md:text-center"
-          )}
+          onClick={() => handleSectionClick('top-rated')}
+          className="text-amber-50 hover:text-amber-200 transition-colors duration-300 text-sm font-medium"
         >
           Les Mieux Notés
         </button>
-        <button
-          onClick={() => handleScrollToSection("recommendations")}
-          className={cn(
-            "text-amber-50 hover:text-amber-200 transition-colors duration-300 text-lg font-medium text-left md:text-center"
-          )}
+        <Link
+          to="/favorites"
+          className="text-amber-50 hover:text-amber-200 transition-colors duration-300 text-sm font-medium"
+          onClick={() => setIsOpen(false)}
         >
-          Vos Recommandations
-        </button>
+          Favoris
+        </Link>
       </div>
     </nav>
   );

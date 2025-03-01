@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 const CarouselPopular = () => {
   const { popular, setPopular, setLoading } = useSearchStore();
@@ -67,15 +67,24 @@ const CarouselPopular = () => {
                 <MovieCard movie={movie} />
               </CarouselItem>
             ))}
+
           {currentPage < totalPages && (
-            <div className="flex justify-center ">
-              <Button
+            <CarouselItem
+              className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+            >
+              <div
+                className="h-full relative group overflow-hidden transform transition-transform duration-500 ease-in-out bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700"
                 onClick={loadMoreMovies}
-                className="bg-blue-500 hover:bg-blue-600 text-white"
               >
-                Voir plus
-              </Button>
-            </div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                  <div className="bg-blue-600 rounded-full p-4 mb-4">
+                    <Plus size={32} className="text-white" />
+                  </div>
+                  <p className="text-white text-lg font-medium">Voir plus</p>
+                  <p className="text-gray-400 text-sm mt-2">Découvrir d'autres films populaires</p>
+                </div>
+              </div>
+            </CarouselItem>
           )}
         </CarouselContent>
         <div className="hidden sm:block">

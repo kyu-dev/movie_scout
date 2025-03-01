@@ -9,14 +9,14 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 const CarouselComponent = () => {
   const { setMostRated, mostRated, setLoading } = useSearchStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const loadMoreRatedMovies = async () => {
+  const loadMoreMovies = async () => {
     if (currentPage >= totalPages) return;
 
     setLoading(true);
@@ -55,9 +55,7 @@ const CarouselComponent = () => {
 
   return (
     <div id="top-rated" className="p-8 sm:p-14">
-      <h2 className="text-white text-2xl font-bold mb-5">
-        Films les mieux notés
-      </h2>
+      <h2 className="text-white text-2xl font-bold mb-5">Films les mieux notés</h2>
       <Carousel>
         <CarouselContent>
           {mostRated &&
@@ -68,17 +66,26 @@ const CarouselComponent = () => {
               >
                 <MovieCard movie={movie} />
               </CarouselItem>
+
             ))}
 
           {currentPage < totalPages && (
-            <div className="flex justify-center mt-8">
-              <Button
-                onClick={loadMoreRatedMovies}
-                className="bg-blue-500 hover:bg-blue-600 text-white"
-              >
-                Voir plus
-              </Button>
+            <CarouselItem
+            className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+          >
+            <div
+              className="h-full relative group overflow-hidden transform transition-transform duration-500 ease-in-out bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700"
+              onClick={loadMoreMovies}
+            >
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                <div className="bg-blue-600 rounded-full p-4 mb-4">
+                  <Plus size={32} className="text-white" />
+                </div>
+                <p className="text-white text-lg font-medium">Voir plus</p>
+                <p className="text-gray-400 text-sm mt-2">Découvrir d'autres films populaires</p>
+              </div>
             </div>
+          </CarouselItem>
           )}
         </CarouselContent>
         <div className="hidden sm:block">

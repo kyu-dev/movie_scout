@@ -49,8 +49,8 @@ const MovieCard = ({ movie }) => {
 
       <div
         className="absolute inset-0
-         bg-blue-900/80 backdrop-blur-sm shadow-lg shadow-blue-800/50 opacity-0 group-hover:opacity-100
-          transition-all duration-500 ease-in-out delay-200 group-hover:delay-400 group-focus:delay-100
+         bg-black/50 backdrop-blur-sm shadow-lg shadow-blue-800/50 opacity-0 group-hover:opacity-100
+          transition-all duration-500 ease-in-out  group-hover:delay-100 group-focus:delay-100
           p-4 flex flex-col justify-between rounded-lg z-10"
       >
         <div className="flex items-center justify-center h-full">

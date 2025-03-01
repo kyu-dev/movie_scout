@@ -5,7 +5,7 @@ import logo from "@/assets/react.svg"; // Importation correcte du logo
 
 const Header = () => {
   return (
-    <header className="bg-gray-900 ">
+    <header className="bg-gray-900 sticky top-0 z-50">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4 md:px-10 py-4 gap-4">
         {/* Logo et menu burger */}
         <div className="w-full md:w-auto flex justify-between items-center gap-7">
