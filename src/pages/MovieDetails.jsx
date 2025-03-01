@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { getMoviesVideos, getMovieDetails, getCasting } from "../api/api";
 import { useSearchStore } from "../store";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "../components/ui/button";
+import MovieDetailsSkeleton from "../components/MovieDetailsSkeleton";
 import {
   Dialog,
   DialogContent,
@@ -21,13 +22,25 @@ const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [casting, setCasting] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const pageRef = useRef(null);
+
+  // Fonction pour s'assurer que la page est en haut
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
+  };
 
   const checkTrailerAvailability = async () => {
     try {
       const url = await getMoviesVideos(movieId);
       setHasTrailer(!!url);
+      return true;
     } catch (err) {
       setError("Erreur lors de la vérification du trailer");
+      return false;
     }
   };
 
@@ -35,8 +48,10 @@ const MovieDetails = () => {
     try {
       const credits = await getCasting(movieId);
       setCasting(credits);
+      return true;
     } catch (err) {
       console.error("Erreur lors de la récupération du casting", err);
+      return false;
     }
   };
 
@@ -44,15 +59,45 @@ const MovieDetails = () => {
     try {
       const details = await getMovieDetails(movieId);
       setMovieDetails(details);
+      return true;
     } catch (err) {
-      throw new Error("Erreur lors de la récupération des détails du film");
+      setError("Erreur lors de la récupération des détails du film");
+      return false;
     }
   };
 
   useEffect(() => {
-    checkTrailerAvailability();
-    getDetails();
-    getCredit();
+    // Défiler vers le haut au chargement initial
+    scrollToTop();
+
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      // S'assurer que la page est en haut avant de commencer le chargement
+      scrollToTop();
+
+      try {
+        // Exécuter toutes les requêtes en parallèle
+        await Promise.all([
+          getDetails(),
+          checkTrailerAvailability(),
+          getCredit()
+        ]);
+      } catch (err) {
+        console.error("Erreur lors du chargement des données", err);
+      } finally {
+        // Délai minimal pour éviter un flash du skeleton
+        setTimeout(() => {
+          setIsLoading(false);
+          // S'assurer que la page est toujours en haut après le chargement
+          scrollToTop();
+        }, 500);
+      }
+    };
+
+    if (movieId) {
+      fetchData();
+    }
   }, [movieId]);
 
   useEffect(() => {
@@ -92,12 +137,35 @@ const MovieDetails = () => {
     setIsLiked(!isLiked);
   };
 
+  // Afficher le skeleton pendant le chargement
+  if (isLoading) {
+    return <MovieDetailsSkeleton />;
+  }
+
+  // Afficher un message d'erreur si nécessaire
+  if (error && !movieDetails) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="bg-gray-900 p-8 rounded-lg text-white text-center">
+          <h2 className="text-2xl font-bold mb-4">Erreur</h2>
+          <p>{error}</p>
+          <Button
+            className="mt-4 bg-blue-600 hover:bg-blue-700"
+            onClick={() => window.history.back()}
+          >
+            Retour
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   if (!movieDetails) {
-    return <div>Chargement...</div>;
+    return <MovieDetailsSkeleton />;
   }
 
   return (
-    <div className="min-h-screen bg-cover bg-center fade-in">
+    <div className="min-h-screen bg-cover bg-center fade-in" ref={pageRef}>
       <div className="bg-gray-950 backdrop-blur-sm min-h-screen p-8">
         <div className="max-w-7xl mx-auto bg-gray-900/90 rounded-lg shadow-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 relative overflow-hidden">
           <div
@@ -174,7 +242,6 @@ const MovieDetails = () => {
                         className="flex flex-col items-center"
                       >
                         <img
-
                           src={
                             actor.profile_path
                               ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`

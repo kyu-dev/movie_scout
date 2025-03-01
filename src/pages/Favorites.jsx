@@ -6,7 +6,7 @@ const Favorites = () => {
   const { likedList } = useSearchStore();
 
   return (
-    <div className="bg-gray-900 min-h-screen p-8">
+    <div className="bg-gray-900 min-h-screen p-8 md:p-16">
       <h1 className="text-3xl font-bold text-white mb-8">Mes Favoris</h1>
 
       {likedList.length === 0 ? (

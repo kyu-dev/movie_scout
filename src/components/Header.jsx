@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import Nav from "./Nav";
-import logo from "@/assets/react.svg"; // Importation correcte du logo
+import logo from "@/assets/netflix.png"; 
 
 const Header = () => {
   return (
