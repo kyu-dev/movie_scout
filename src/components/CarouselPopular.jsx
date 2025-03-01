@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchStore } from "../store";
+import { useStore } from "../store/store";
 import { getPopularMovies } from "../api/api";
 import MovieCard from "./MovieCard";
 import {
@@ -12,7 +12,7 @@ import {
 import { Plus } from "lucide-react";
 
 const CarouselPopular = () => {
-  const { popular, setPopular, setLoading } = useSearchStore();
+  const { popular, setPopular, setLoading } = useStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 

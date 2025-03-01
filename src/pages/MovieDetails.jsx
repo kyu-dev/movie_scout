@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getMoviesVideos, getMovieDetails, getCasting } from "../api/api";
-import { useSearchStore } from "../store";
+import { useStore } from "../store/store";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "../components/ui/button";
 import MovieDetailsSkeleton from "../components/MovieDetailsSkeleton";
@@ -13,7 +13,7 @@ import {
 import { Heart } from "lucide-react";
 
 const MovieDetails = () => {
-  const { movieId, likedList, setLikedList } = useSearchStore();
+  const { movieId, likedList, setLikedList } = useStore();
   const [trailerUrl, setTrailerUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

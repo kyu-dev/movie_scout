@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import MovieCard from "./MovieCard";
-import { useSearchStore } from "../store";
+import { useStore } from "../store/store";
 import { useLocation } from "react-router-dom";
 import { getMoviesByGenre, fetchMovies } from "../api/api";
 
 function SearchResults() {
-  const { movies, loading, setMovies, setLoading, query } = useSearchStore();
+  const { movies, loading, setMovies, setLoading, query } = useStore();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const genreId = searchParams.get("genre");

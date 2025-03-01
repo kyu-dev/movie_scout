@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchStore } from "../store";
+import { useStore } from "../store/store";
 import { getRecomandation } from "../api/api";
 import MovieCard from "./MovieCard";
 import {
@@ -12,7 +12,7 @@ import {
 import { Plus } from "lucide-react"
 
 const CarouselRecomandation = () => {
-  const { likedList, setLoading } = useSearchStore();
+  const { likedList, setLoading } = useStore();
   const [recommendations, setRecommendations] = useState([]);
   const [lastLikedMovie, setLastLikedMovie] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);

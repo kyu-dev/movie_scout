@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useSearchStore } from "../store";
+import { useStore } from "../store/store";
 import { Heart } from "lucide-react"; // Import de l'icône Heart
 
 const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
-  const { setMovieId, setLikedList, likedList } = useSearchStore();
+  const { setMovieId, setLikedList, likedList } = useStore();
 
   const isLiked =
     likedList?.some((likedMovie) => likedMovie.id === movie.id) || false;

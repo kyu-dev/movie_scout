@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMovieDetails } from "../api/api";
-import { useSearchStore } from "../store";
+import { useStore } from "../store/store";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ const Hero = () => {
     heroMovie,
     setHeroMovie,
     setMovieId,
-  } = useSearchStore();
+  } = useStore();
   const [genres, setGenres] = useState([]);
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(true);

@@ -3,12 +3,12 @@ import Hero from "@/components/Hero";
 import CarouselPopular from "../components/CarouselPopular";
 import CarouselMostRated from "../components/CarouselMostRated";
 import CarouselRecomandation from "@/components/CarouselRecomandation";
-import { useSearchStore } from "@/store";
+import { useStore } from "@/store/store";
 import { useLocation } from "react-router-dom";
 import CarouselGenre from "@/components/CarouselGenre";
 
 const Home = () => {
-  const { likedList } = useSearchStore();
+  const { likedList } = useStore();
   const location = useLocation();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const Home = () => {
       <CarouselPopular />
       <CarouselMostRated />
       {likedList.length > 0 && <CarouselRecomandation />}
-      
+
     </div>
   );
 };

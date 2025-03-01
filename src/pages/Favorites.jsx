@@ -1,9 +1,9 @@
 import React from "react";
-import { useSearchStore } from "../store";
+import { useStore } from "../store/store";
 import MovieCard from "../components/MovieCard";
 
 const Favorites = () => {
-  const { likedList } = useSearchStore();
+  const { likedList } = useStore();
 
   return (
     <div className="bg-gray-900 min-h-screen p-8 md:p-16">

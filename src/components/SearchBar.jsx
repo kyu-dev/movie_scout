@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchMovies } from "../api/api";
-import { useSearchStore } from "../store";
+import { useStore } from "../store/store";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Search, X } from "lucide-react";
 
 const SearchBar = () => {
-  const { query, setQuery, setMovies, setLoading } = useSearchStore();
+  const { query, setQuery, setMovies, setLoading } = useStore();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
