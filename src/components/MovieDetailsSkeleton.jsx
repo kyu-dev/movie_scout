@@ -25,7 +25,10 @@ const MovieDetailsSkeleton = () => {
 
           <div className="flex flex-wrap gap-2">
             {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-6 w-20 rounded-full bg-gray-800/50" />
+              <Skeleton
+                key={i}
+                className="h-6 w-20 rounded-full bg-gray-800/50"
+              />
             ))}
           </div>
 

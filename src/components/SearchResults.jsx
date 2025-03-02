@@ -99,7 +99,7 @@ function SearchResults() {
         {error && <p>{error}</p>}
         {movies &&
           movies
-            .filter((movie) => movie.poster_path)   // filtre les élément qui n'on pas d'image pour ne pas afficher les faux films
+            .filter((movie) => movie.poster_path) // filtre les élément qui n'on pas d'image pour ne pas afficher les faux films
             .map((movie, index) => (
               <li key={`${movie.id}-${index}`}>
                 <MovieCard movie={movie} />

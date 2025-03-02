@@ -3,6 +3,7 @@ import { getMoviesVideos, getMovieDetails, getCasting } from "../api/api";
 import { useStore } from "../store/store";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "../components/ui/button";
+import { BackButton } from "../components/ui/back-button";
 import MovieDetailsSkeleton from "../components/MovieDetailsSkeleton";
 import {
   Dialog,
@@ -29,7 +30,7 @@ const MovieDetails = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'instant'
+      behavior: "instant",
     });
   };
 
@@ -81,7 +82,7 @@ const MovieDetails = () => {
         await Promise.all([
           getDetails(),
           checkTrailerAvailability(),
-          getCredit()
+          getCredit(),
         ]);
       } catch (err) {
         console.error("Erreur lors du chargement des données", err);
@@ -145,16 +146,15 @@ const MovieDetails = () => {
   // Afficher un message d'erreur si nécessaire
   if (error && !movieDetails) {
     return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-        <div className="bg-gray-900 p-8 rounded-lg text-white text-center">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-8">
+        <div className="bg-gray-800 p-8 rounded-lg max-w-md text-white">
           <h2 className="text-2xl font-bold mb-4">Erreur</h2>
           <p>{error}</p>
-          <Button
+          <BackButton
             className="mt-4 bg-blue-600 hover:bg-blue-700"
-            onClick={() => window.history.back()}
-          >
-            Retour
-          </Button>
+            variant="default"
+            showLabel={true}
+          />
         </div>
       </div>
     );
@@ -167,6 +167,9 @@ const MovieDetails = () => {
   return (
     <div className="min-h-screen bg-cover bg-center fade-in" ref={pageRef}>
       <div className="bg-gray-950 backdrop-blur-sm min-h-screen p-8">
+        <div className="max-w-7xl mx-auto mb-4">
+          <BackButton showLabel={true} />
+        </div>
         <div className="max-w-7xl mx-auto bg-gray-900/90 rounded-lg shadow-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 relative overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center z-0 blur-xl opacity-50"

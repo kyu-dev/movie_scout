@@ -8,7 +8,7 @@ const Nav = () => {
   const navigate = useNavigate();
 
   const handleSectionClick = (section) => {
-    navigate('/', { state: { scrollTo: section } });
+    navigate("/", { state: { scrollTo: section } });
     setIsOpen(false);
   };
 
@@ -16,12 +16,18 @@ const Nav = () => {
     <nav>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden p-2 text-amber-50 hover:text-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
+        className="md:hidden p-2 text-amber-50 hover:text-blue-300 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
       >
         {isOpen ? (
-          <X size={28} className="transition-transform duration-300 ease-in-out" />
+          <X
+            size={28}
+            className="transition-transform duration-300 ease-in-out"
+          />
         ) : (
-          <Menu size={28} className="transition-transform duration-300 ease-in-out" />
+          <Menu
+            size={28}
+            className="transition-transform duration-300 ease-in-out"
+          />
         )}
       </button>
 
@@ -35,27 +41,27 @@ const Nav = () => {
       >
         <button
           onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-4 p-2 text-amber-50 hover:text-amber-200 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
+          className="absolute top-4 right-4 p-2 text-amber-50 hover:text-blue-300 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
         >
           <X size={28} />
         </button>
 
         <div className="container mx-auto h-full flex flex-col items-center justify-center space-y-8">
           <button
-            onClick={() => handleSectionClick('popular')}
-            className="text-amber-50 hover:text-amber-200 text-2xl font-medium transition-colors duration-300"
+            onClick={() => handleSectionClick("popular")}
+            className="text-amber-50 hover:text-blue-300 text-2xl font-medium transition-colors duration-300"
           >
             Populaires
           </button>
           <button
-            onClick={() => handleSectionClick('top-rated')}
-            className="text-amber-50 hover:text-amber-200 text-2xl font-medium transition-colors duration-300"
+            onClick={() => handleSectionClick("top-rated")}
+            className="text-amber-50 hover:text-blue-300 text-2xl font-medium transition-colors duration-300"
           >
             Les Mieux Notés
           </button>
           <Link
             to="/favorites"
-            className="text-amber-50 hover:text-amber-200 text-2xl font-medium transition-colors duration-300"
+            className="text-amber-50 hover:text-blue-300 text-2xl font-medium transition-colors duration-300"
             onClick={() => setIsOpen(false)}
           >
             Favoris
@@ -65,20 +71,20 @@ const Nav = () => {
 
       <div className="hidden md:flex container mx-auto px-4 justify-center space-x-8">
         <button
-          onClick={() => handleSectionClick('popular')}
-          className="text-amber-50 hover:text-amber-200 transition-colors duration-300 text-sm font-medium"
+          onClick={() => handleSectionClick("popular")}
+          className="text-amber-50 hover:text-blue-300 transition-colors duration-300 text-sm font-medium"
         >
           Populaires
         </button>
         <button
-          onClick={() => handleSectionClick('top-rated')}
-          className="text-amber-50 hover:text-amber-200 transition-colors duration-300 text-sm font-medium"
+          onClick={() => handleSectionClick("top-rated")}
+          className="text-amber-50 hover:text-blue-300 transition-colors duration-300 text-sm font-medium"
         >
           Les Mieux Notés
         </button>
         <Link
           to="/favorites"
-          className="text-amber-50 hover:text-amber-200 transition-colors duration-300 text-sm font-medium"
+          className="text-amber-50 hover:text-blue-300 transition-colors duration-300 text-sm font-medium"
           onClick={() => setIsOpen(false)}
         >
           Favoris

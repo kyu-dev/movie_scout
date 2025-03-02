@@ -25,7 +25,7 @@ const Hero = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'instant'
+      behavior: "instant",
     });
   };
 
@@ -119,7 +119,7 @@ const Hero = () => {
         <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
           {heroMovie?.title}
         </h1>
-
+        ∏
         <div className="flex flex-wrap gap-2 my-4">
           {genres.map((genre) => (
             <Badge key={genre.id} variant="outline" className="text-white">
@@ -127,17 +127,13 @@ const Hero = () => {
             </Badge>
           ))}
         </div>
-
         <Button
           onClick={handleMovieClick}
           className="bg-blue-600 hover:bg-blue-700 w-fit transform transition-all hover:scale-105 active:scale-95 mb-4"
         >
           En savoir plus
         </Button>
-
-        <p className="text-gray-300 max-w-2xl line-clamp-3">
-          {description}
-        </p>
+        <p className="text-gray-300 max-w-2xl line-clamp-3">{description}</p>
       </div>
     </div>
   );
