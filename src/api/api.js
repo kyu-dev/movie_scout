@@ -1,7 +1,7 @@
 const options = {
-  method: "GET",
+  method: 'GET',
   headers: {
-    accept: "application/json",
+    accept: 'application/json',
     Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
   },
 };
@@ -22,7 +22,7 @@ export async function fetchMovies(query, page = 1) {
     }
     return data;
   } catch (err) {
-    throw new Error("Erreur lors de la récupération des films");
+    throw new Error('Erreur lors de la récupération des films');
   }
 }
 
@@ -40,7 +40,7 @@ export async function getMoviesVideos(movieID) {
     const trailer = `https://www.youtube.com/watch?v=${data.results[0].key}`; // recupere la premiere vidéo du resultat de recherche
     return trailer;
   } catch (err) {
-    throw new Error("ereur lors de la récupération de la video");
+    throw new Error('ereur lors de la récupération de la video');
   }
 }
 
@@ -57,7 +57,7 @@ export async function getPopularMovies(page = 1) {
     const data = await response.json();
     return data;
   } catch (err) {
-    throw new Error("erreur lors de la recupération des films populaires");
+    throw new Error('erreur lors de la recupération des films populaires');
   }
 }
 
@@ -74,7 +74,7 @@ export async function getMostRatedMovies(page = 1) {
     const data = await response.json();
     return data;
   } catch (err) {
-    throw new Error("erreur lors de la récupération des films les mieux noté");
+    throw new Error('erreur lors de la récupération des films les mieux noté');
   }
 }
 
@@ -91,7 +91,7 @@ export async function getMovieDetails(movieID) {
     const data = await response.json();
     return data;
   } catch (err) {
-    throw new Error("Erreur lors de la récupération des détails du film");
+    throw new Error('Erreur lors de la récupération des détails du film');
   }
 }
 
@@ -108,7 +108,7 @@ export async function getRecomandation(movieID, page = 1) {
     const data = await response.json();
     return data;
   } catch (err) {
-    throw new Error("erreur lors de la recupération des recomandations");
+    throw new Error('erreur lors de la recupération des recomandations');
   }
 }
 
@@ -119,13 +119,13 @@ export async function getRecomandation(movieID, page = 1) {
 export async function getGenre() {
   try {
     const response = await fetch(
-      "https://api.themoviedb.org/3/genre/movie/list?language=fr",
+      'https://api.themoviedb.org/3/genre/movie/list?language=fr',
       options
     );
     const data = await response.json();
     return data.genres;
   } catch (err) {
-    throw new Error("erreur lors de la recuperation des genre");
+    throw new Error('erreur lors de la recuperation des genre');
   }
 }
 
@@ -141,7 +141,7 @@ export async function getMoviesByGenre(genreId, page = 1) {
     );
     return await response.json();
   } catch (err) {
-    throw new Error("Erreur lors de la récupération des films par genre");
+    throw new Error('Erreur lors de la récupération des films par genre');
   }
 }
 
@@ -157,9 +157,6 @@ export async function getCasting(movieID) {
     const data = await response.json();
     return data; // Retourne l'objet complet avec cast et crew
   } catch (err) {
-    throw new Error("Erreur lors de la récupération du casting");
+    throw new Error('Erreur lors de la récupération du casting');
   }
 }
-
-
-

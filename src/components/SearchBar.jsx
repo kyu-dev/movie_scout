@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { fetchMovies } from "../api/api";
-import { useStore } from "../store/store";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Search, X } from "lucide-react";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { fetchMovies } from '../api/api';
+import { useStore } from '../store/store';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { Search, X } from 'lucide-react';
 
 const SearchBar = () => {
   const { query, setQuery, setMovies, setLoading } = useStore();
@@ -14,7 +14,7 @@ const SearchBar = () => {
   useEffect(() => {
     if (!query) {
       setMovies([]);
-      navigate("/");
+      navigate('/');
       return;
     }
 
@@ -28,9 +28,9 @@ const SearchBar = () => {
         } else {
           throw new Error("Format de réponse inattendu de l'API");
         }
-        navigate("/search");
+        navigate('/search');
       } catch (err) {
-        setError("Erreur lors de la récupération des films");
+        setError('Erreur lors de la récupération des films');
       } finally {
         setLoading(false);
       }
@@ -39,29 +39,42 @@ const SearchBar = () => {
     return () => clearTimeout(timeout);
   }, [query, navigate, setMovies, setLoading, setError]);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      setQuery('');
+      setMovies([]);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [setQuery, setMovies]);
+
   return (
-    <div className="bg-amber-50 w-full max-w-2xl px-4 py-2 rounded-3xl shadow-lg">
-      <div className="flex items-center gap-2">
-        <Search className="text-gray-500 w-5 h-5" />
+    <div className='bg-amber-50 w-full max-w-2xl px-4 py-2 rounded-3xl shadow-lg'>
+      <div className='flex items-center gap-2'>
+        <Search className='text-gray-500 w-5 h-5' />
         <input
-          type="text"
-          placeholder="Rechercher un film..."
+          type='text'
+          placeholder='Rechercher un film...'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full bg-transparent focus:outline-none placeholder-gray-400 text-sm sm:text-base flex-1 min-w-0"
+          className='w-full bg-transparent focus:outline-none placeholder-gray-400 text-sm sm:text-base flex-1 min-w-0'
         />
         <Button
-          variant="ghost"
-          size="sm"
+          variant='ghost'
+          size='sm'
           className={`p-1 hover:bg-amber-100 rounded-full transition-opacity ${
-            query ? "opacity-100" : "opacity-0 pointer-events-none"
+            query ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
           onClick={() => {
-            navigate("/");
-            setQuery("");
+            navigate('/');
+            setQuery('');
           }}
         >
-          <X className="w-4 h-4 text-gray-500" />
+          <X className='w-4 h-4 text-gray-500' />
         </Button>
       </div>
     </div>

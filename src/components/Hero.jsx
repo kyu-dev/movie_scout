@@ -119,7 +119,6 @@ const Hero = () => {
         <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
           {heroMovie?.title}
         </h1>
-        ∏
         <div className="flex flex-wrap gap-2 my-4">
           {genres.map((genre) => (
             <Badge key={genre.id} variant="outline" className="text-white">

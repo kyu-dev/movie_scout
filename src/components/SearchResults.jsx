@@ -1,18 +1,33 @@
-import React, { useEffect, useState, useRef } from "react";
-import MovieCard from "./MovieCard";
-import { useStore } from "../store/store";
-import { useLocation } from "react-router-dom";
-import { getMoviesByGenre, fetchMovies } from "../api/api";
+import React, { useEffect, useState, useRef } from 'react';
+import MovieCard from './MovieCard';
+import { useStore } from '../store/store';
+import { useLocation } from 'react-router-dom';
+import { getMoviesByGenre, fetchMovies } from '../api/api';
+import { BackButton } from '@/components/ui/back-button';
 
 function SearchResults() {
-  const { movies, loading, setMovies, setLoading, query } = useStore();
+  const {
+    movies,
+    loading,
+    setMovies,
+    setLoading,
+    query,
+    setQuery,
+    genre: globalGenres,
+  } = useStore();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const genreId = searchParams.get("genre");
+  const genreId = searchParams.get('genre');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const loaderRef = useRef(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
+
+  const getGenreName = () => {
+    if (!genreId || !globalGenres) return null;
+    const foundGenre = globalGenres.find((g) => g.id === parseInt(genreId));
+    return foundGenre ? foundGenre.name : null;
+  };
 
   const loadMoreMovies = async () => {
     if (currentPage >= totalPages || loading) return;
@@ -34,7 +49,7 @@ function SearchResults() {
         throw new Error("Format de réponse inattendu de l'API");
       }
     } catch (err) {
-      setError("Erreur lors du chargement des films supplémentaires");
+      setError('Erreur lors du chargement des films supplémentaires');
     } finally {
       setLoading(false);
     }
@@ -49,7 +64,7 @@ function SearchResults() {
         }
       },
       {
-        rootMargin: "200px",
+        rootMargin: '200px',
         threshold: 0.1,
       }
     );
@@ -83,7 +98,7 @@ function SearchResults() {
           throw new Error("Format de réponse inattendu de l'API");
         }
       } catch (err) {
-        setError("Erreur lors de la récupération des films");
+        setError('Erreur lors de la récupération des films');
       } finally {
         setLoading(false);
       }
@@ -93,8 +108,16 @@ function SearchResults() {
   }, [genreId, query, setMovies, setLoading, setError]);
 
   return (
-    <div className="bg-gray-900 p-10">
-      <ul className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-10">
+    <div className='bg-gray-900 p-10'>
+      <div className='flex flex-row gap-10'>
+        <BackButton className='mb-10' onBack={() => setQuery('')} />
+        <h2 className='text-2xl text-blue-300 font-medium'>
+          {genreId
+            ? `Films du genre : ${getGenreName() || 'Chargement...'}`
+            : `Résultats pour : ${query}`}
+        </h2>
+      </div>
+      <ul className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-10'>
         {loading && <p>Chargement des films...</p>}
         {error && <p>{error}</p>}
         {movies &&
@@ -106,9 +129,9 @@ function SearchResults() {
               </li>
             ))}
       </ul>
-      <div ref={loaderRef} className="h-20">
+      <div ref={loaderRef} className='h-20'>
         {loading && currentPage > 1 && (
-          <div className="flex justify-center mt-8">
+          <div className='flex justify-center mt-8'>
             <p>Chargement des films supplémentaires...</p>
           </div>
         )}

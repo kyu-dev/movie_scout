@@ -1,14 +1,14 @@
-import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
-import MovieDetails from "./pages/MovieDetails";
-import Layout from "./components/Layout";
-import SearchResults from "./components/SearchResults";
-import Favorites from "./pages/Favorites";
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from './pages/Home';
+import MovieDetails from './pages/MovieDetails';
+import Layout from './components/Layout';
+import SearchResults from './components/SearchResults';
+import Favorites from './pages/Favorites';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Layout />,
     children: [
       {
@@ -16,15 +16,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/search",
+        path: '/search',
         element: <SearchResults />,
       },
       {
-        path: "/movie/:movieId",
+        path: '/movie/:movieId',
         element: <MovieDetails />,
       },
       {
-        path: "/favorites",
+        path: '/favorites',
         element: <Favorites />,
       },
     ],
