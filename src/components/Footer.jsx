@@ -25,7 +25,7 @@ const Footer = () => {
               <li>
                 <Link
                   to='/'
-                  className='text-gray-400 hover:text-blue-3000 transition-colors'
+                  className='text-gray-400 hover:text-blue-300 transition-colors'
                 >
                   Accueil
                 </Link>
@@ -38,22 +38,6 @@ const Footer = () => {
                   Favoris
                 </Link>
               </li>
-              <li>
-                <Link
-                  to='/popular'
-                  className='text-gray-400 hover:text-blue-300 transition-colors'
-                >
-                  Films Populaires
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to='/upcoming'
-                  className='text-gray-400 hover:text-blue-300 transition-colors'
-                >
-                  Prochaines Sorties
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -63,7 +47,7 @@ const Footer = () => {
             <ul className='space-y-2'>
               <li>
                 <a
-                  href='https://github.com/votre-username'
+                  href='https://github.com/kyu-dev'
                   target='_blank'
                   rel='noopener noreferrer'
                   className='text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2'
@@ -74,7 +58,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href='mailto:contact@moviescout.com'
+                  href='mailto:contact@example.com'
                   className='text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2'
                 >
                   <Mail size={18} />
@@ -83,7 +67,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href='https://twitter.com/votre-username'
+                  href='https://x.com/V0_Arthur'
                   target='_blank'
                   rel='noopener noreferrer'
                   className='text-gray-400 hover:text-blue-300 transition-colors flex items-center gap-2'
@@ -96,26 +80,12 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Barre de copyright */}
+        {/* Barre de copyright simplifiée */}
         <div className='border-t border-gray-800 py-6'>
-          <div className='flex flex-col sm:flex-row justify-between items-center'>
+          <div className='flex justify-center items-center'>
             <p className='text-gray-400 text-sm'>
               © {currentYear} Netflix. Tous droits pas réservés.
             </p>
-            <div className='flex gap-4 mt-4 sm:mt-0'>
-              <Link
-                to='/privacy'
-                className='text-gray-400 hover:text-blue-300 text-sm transition-colors'
-              >
-                Politique de confidentialité
-              </Link>
-              <Link
-                to='/terms'
-                className='text-gray-400 hover:text-blue-300 text-sm transition-colors'
-              >
-                Conditions d'utilisation
-              </Link>
-            </div>
           </div>
         </div>
       </div>
