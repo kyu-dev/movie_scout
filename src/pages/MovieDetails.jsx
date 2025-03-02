@@ -164,7 +164,7 @@ const MovieDetails = () => {
     <div className='min-h-screen bg-cover bg-center fade-in' ref={pageRef}>
       <div className='bg-gray-950 backdrop-blur-sm min-h-screen p-8'>
         <div className='max-w-7xl mx-auto mb-4'>
-          <BackButton/>
+          <BackButton />
         </div>
         <div className='max-w-7xl mx-auto bg-gray-900/90 rounded-lg shadow-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8 relative overflow-hidden'>
           <div
