@@ -128,7 +128,7 @@ const Hero = () => {
         </div>
         <Button
           onClick={handleMovieClick}
-          className="bg-blue-600 hover:bg-blue-700 w-fit transform transition-all hover:scale-105 active:scale-95 mb-4"
+          className="bg-blue-600 hover:bg-blue-700 w-fit text-white transform transition-all hover:scale-105 active:scale-95 mb-4"
         >
           En savoir plus
         </Button>
